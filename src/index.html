@@ -94,22 +94,21 @@
   import { PlanetsApplication } from '/src/js/applications/planet-application/index.js';
   import { TerroristApplication } from '/src/js/applications/terrorist-application/index.js';
 
-  const planetsApplication = new PlanetsApplication('/src/js/models/Planet_Final.glb')
+  // const planetsApplication = new PlanetsApplication('/src/js/models/Planet_Final.glb')
 
-  const callback = () => {
-    planetsApplication.build('scene-container')
-    planetsApplication.setObserver()
-  }
-  await planetsApplication.init(callback)
-
-  // const terroristApplication = new TerroristApplication('/src/js/models/CS_Man_Anim_03.glb')
-
-  // const callback2 = () => {
-  //   terroristApplication.build('scene-container')
-  //   terroristApplication.startAnimation()
-  //   terroristApplication.setObserver()
+  // const callback = () => {
+  //   planetsApplication.build('scene-container')
+  //   planetsApplication.setObserver()
   // }
-  // await terroristApplication.init(callback2)
+  // await planetsApplication.init(callback)
+
+  const terroristApplication = new TerroristApplication('/src/js/models/CS_Man_Anim_03.glb')
+
+  const callback2 = () => {
+    terroristApplication.build('scene-container')
+    terroristApplication.setObserver()
+  }
+  await terroristApplication.init(callback2)
 
   // FOR ANIMATION
   // terroristApplication.stopAnimation()
@@ -119,11 +118,13 @@
   const start = document.getElementById('start')
   start.addEventListener('click', () => {
     terroristApplication.build('scene-container')
-    terroristApplication.startAnimation()
+    terroristApplication.setObserver()
+    // terroristApplication.startAnimation()
   })
 
   const stop = document.getElementById('stop')
   stop.addEventListener('click', () => {
+    terroristApplication.stopAnimation()
     terroristApplication.dispose()
   })
 </script>

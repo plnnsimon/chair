@@ -73,6 +73,8 @@ export class TerroristApplication extends ThreejsApplication {
       return 
     }
     this.scene.add(this.loadedModel.scene);
+    this.loadedModel.scene.position.set(0, 0, 0);
+    this.mixer = new THREE.AnimationMixer(this.loadedModel.scene);
     this.sceneLights.initializeLights()
   }
 
@@ -116,8 +118,6 @@ export class TerroristApplication extends ThreejsApplication {
 
     try {
       await loader.initGLTFLoader(callback);
-      this.loadedModel.scene.position.set(0, 0, 0);
-      this.mixer = new THREE.AnimationMixer(this.loadedModel.scene);
     } catch (err) {
       console.error(err);
     }
@@ -146,12 +146,10 @@ export class TerroristApplication extends ThreejsApplication {
       });
       if (isIntersecting) {
         console.log('isIntersecting');
-        this.mount();
         this.startAnimation()
       }
       if (!isIntersecting) {
         console.log('no isIntersecting');
-        this.unmount();
         this.stopAnimation()
       }
     };
@@ -167,6 +165,7 @@ export class TerroristApplication extends ThreejsApplication {
 
     const action = this.mixer.clipAction(clip).setLoop(THREE.LoopRepeat);
     action.play();
+    this.mount();
   }
 
   stopAnimation() {
@@ -196,6 +195,7 @@ export class TerroristApplication extends ThreejsApplication {
     this.renderer.instance.dispose();
     this.renderer.instance.render(this.scene, this.camera.instance);
     THREE.Cache.remove();
+    this.mixer = null
 
     if (this.observer) {
       this.observer.disconnect();
