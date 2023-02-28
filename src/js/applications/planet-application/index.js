@@ -128,23 +128,7 @@ export class PlanetsApplication extends ThreejsApplication {
       await loader.initGLTFLoader(callback);
       this.loadedModel.scene.position.set(0, 0, 0);
 
-      const clips = this.loadedModel.animations;
       this.mixer = new THREE.AnimationMixer(this.loadedModel.scene);
-
-      const circleClip = THREE.AnimationClip.findByName(
-        clips,
-        'bone_circle_animation_'
-      );
-      this.mixer.clipAction(circleClip).setLoop(THREE.LoopRepeat);
-
-      const networkClip = THREE.AnimationClip.findByName(clips, 'Network');
-      this.mixer.clipAction(networkClip).setLoop(THREE.LoopRepeat);
-
-      const circleAction = this.mixer.clipAction(circleClip);
-      circleAction.play();
-
-      const networkAction = this.mixer.clipAction(networkClip);
-      networkAction.play();
 
       const planet = this.loadedModel.scene.children[0];
 
@@ -188,10 +172,12 @@ export class PlanetsApplication extends ThreejsApplication {
       if (isIntersecting) {
         console.log('isIntersecting');
         this.mount();
+        this.startAnimation()
       }
       if (!isIntersecting) {
         console.log('no isIntersecting');
         this.unmount();
+        this.stopAnimation()
       }
     };
 
@@ -200,10 +186,35 @@ export class PlanetsApplication extends ThreejsApplication {
   }
 
   startAnimation() {
-    this.setObserver();
+    const clips = this.loadedModel.animations;
+    const circleClip = THREE.AnimationClip.findByName(
+      clips,
+      'bone_circle_animation_'
+    );
+
+    const networkClip = THREE.AnimationClip.findByName(clips, 'Network');
+
+    const circleAction = this.mixer.clipAction(circleClip).setLoop(THREE.LoopRepeat);
+    circleAction.play();
+
+    const networkAction = this.mixer.clipAction(networkClip);
+    networkAction.play();
   }
 
   stopAnimation() {
+    const clips = this.loadedModel.animations;
+    const circleClip = THREE.AnimationClip.findByName(
+      clips,
+      'bone_circle_animation_'
+    );
+
+    const networkClip = THREE.AnimationClip.findByName(clips, 'Network');
+
+    const circleAction = this.mixer.clipAction(circleClip)
+    circleAction.reset();
+
+    const networkAction = this.mixer.clipAction(networkClip);
+    networkAction.reset();
     this.unmount();
   }
 
