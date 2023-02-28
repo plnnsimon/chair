@@ -62,9 +62,9 @@ export class TerroristApplication extends ThreejsApplication {
       el.receiveShadow = true
       el.frustumCulled = false;
     })
-
-    this.scene.scale.set(0.01, 0.01, 0.01);
-    this.scene.position.set(0, -0.4, 0);
+    
+    this.scene.scale.set(0.018, 0.018, 0.018);
+    this.scene.position.set(0, -0.68, 0);
     this.scene.rotation.y = -0.4;
     this.camera.resize();
     
@@ -159,6 +159,11 @@ export class TerroristApplication extends ThreejsApplication {
   }
 
   startAnimation() {
+    if (!this.mixer || !this.loadedModel) {
+      console.log('this.mixer is null or loadedModel is not defined');
+      return
+    }
+
     const clips = this.loadedModel.animations;
 
     const clip = THREE.AnimationClip.findByName(clips, "Idle");
@@ -169,6 +174,11 @@ export class TerroristApplication extends ThreejsApplication {
   }
 
   stopAnimation() {
+    if (!this.mixer || !this.loadedModel) {
+      console.log('this.mixer is null or loadedModel is not defined');
+      return
+    }
+    
     const clips = this.loadedModel.animations;
     this.mixer = new THREE.AnimationMixer(this.loadedModel.scene);
 

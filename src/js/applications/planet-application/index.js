@@ -46,7 +46,7 @@ export class PlanetsApplication extends ThreejsApplication {
     const container = document.getElementById(canvasContainerId);
     if (!container) {
       console.log('Canvas container is not defined');
-      return 
+      return;
     }
 
     const canvas = document.createElement('canvas');
@@ -66,13 +66,13 @@ export class PlanetsApplication extends ThreejsApplication {
       this.resize();
     });
 
-    this.scene.scale.set(0.5, 0.5, 0.5);
+    this.scene.scale.set(0.9, 0.9, 0.9);
     this.scene.position.set(0, 0, 0);
     this.camera.resize();
 
     if (!this.loadedModel) {
       console.log('Model is not defined');
-      return
+      return;
     }
     this.scene.add(this.loadedModel.scene);
     this.loadedModel.scene.position.set(0, 0, 0);
@@ -122,7 +122,7 @@ export class PlanetsApplication extends ThreejsApplication {
 
     if (!this.objectPath) {
       console.log('Object is not defined');
-      return 
+      return;
     }
 
     const loader = new ModelLoader(this.objectPath, this);
@@ -151,7 +151,7 @@ export class PlanetsApplication extends ThreejsApplication {
   setObserver() {
     if (!this.canvas) {
       console.log('Canvas is not provided');
-      return
+      return;
     }
 
     if (this.observer) {
@@ -171,11 +171,11 @@ export class PlanetsApplication extends ThreejsApplication {
       });
       if (isIntersecting) {
         console.log('isIntersecting');
-        this.startAnimation()
+        this.startAnimation();
       }
       if (!isIntersecting) {
         console.log('no isIntersecting');
-        this.stopAnimation()
+        this.stopAnimation();
       }
     };
 
@@ -184,6 +184,11 @@ export class PlanetsApplication extends ThreejsApplication {
   }
 
   startAnimation() {
+    if (!this.mixer || !this.loadedModel) {
+      console.log('this.mixer is null or loadedModel is not defined');
+      return
+    }
+    
     const clips = this.loadedModel.animations;
     const circleClip = THREE.AnimationClip.findByName(
       clips,
@@ -192,7 +197,9 @@ export class PlanetsApplication extends ThreejsApplication {
 
     const networkClip = THREE.AnimationClip.findByName(clips, 'Network');
 
-    const circleAction = this.mixer.clipAction(circleClip).setLoop(THREE.LoopRepeat);
+    const circleAction = this.mixer
+      .clipAction(circleClip)
+      .setLoop(THREE.LoopRepeat);
     circleAction.play();
 
     const networkAction = this.mixer.clipAction(networkClip);
@@ -201,6 +208,11 @@ export class PlanetsApplication extends ThreejsApplication {
   }
 
   stopAnimation() {
+    if (!this.mixer || !this.loadedModel) {
+      console.log('this.mixer is null or loadedModel is not defined');
+      return
+    }
+    
     const clips = this.loadedModel.animations;
     const circleClip = THREE.AnimationClip.findByName(
       clips,
@@ -209,7 +221,7 @@ export class PlanetsApplication extends ThreejsApplication {
 
     const networkClip = THREE.AnimationClip.findByName(clips, 'Network');
 
-    const circleAction = this.mixer.clipAction(circleClip)
+    const circleAction = this.mixer.clipAction(circleClip);
     circleAction.reset();
 
     const networkAction = this.mixer.clipAction(networkClip);
@@ -229,7 +241,7 @@ export class PlanetsApplication extends ThreejsApplication {
     while (this.scene && this.scene.children.length) {
       const child = this.scene.children[0];
       child.parent.remove(child);
-    
+
       if (child instanceof THREE.Mesh) {
         child.geometry.dispose();
         child.material.dispose();
@@ -239,7 +251,7 @@ export class PlanetsApplication extends ThreejsApplication {
     this.renderer.instance.dispose();
     this.renderer.instance.render(this.scene, this.camera.instance);
     THREE.Cache.remove();
-    this.mixer = null
+    this.mixer = null;
 
     if (this.observer) {
       this.observer.disconnect();
