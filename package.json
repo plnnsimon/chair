@@ -1,0 +1,35 @@
+{
+  "name": "web3d",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@google/model-viewer": "^3.4.0",
+    "font-awesome": "^4.7.0",
+    "gsap": "^3.9.1",
+    "html2canvas": "^1.4.1",
+    "ngrok": "^5.0.0-beta.2",
+    "postprocessing": "^6.34.1",
+    "realism-effects": "^1.1.2",
+    "sass": "^1.69.5",
+    "screen-space-reflections": "^2.5.0",
+    "stats-js": "^1.0.1",
+    "three": "^0.160.0",
+    "three-globe": "^2.30.0",
+    "threex": "^1.0.0",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.14"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.2.0",
+    "dat.gui": "^0.7.9",
+    "vite": "^2.8.0"
+  }
+}
