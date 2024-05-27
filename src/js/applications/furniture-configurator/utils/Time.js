@@ -1,4 +1,4 @@
-import EventEmitter from "@/three/utils/EventEmitter";
+import EventEmitter from '../../../../pkg/utils/EventEmitter'
 
 export default class Time extends EventEmitter {
     constructor() {

@@ -3,10 +3,10 @@ import Camera from "./utils/Camera.js";
 import Renderer from "./utils/Renderer.js";
 import SceneLights from "./helpers/SceneLights.js";
 import { GUI } from "dat.gui";
-import Sizes from '@/pkg/utils/Sizes.js';
-import ModelLoader from '@/pkg/utils/GLTFLoader.js';
-import ThreejsApplication from '@/pkg/ThreejsApplication.js';
-import useModelsUtils from "@/pkg/utils/use-models-utils.js";
+import Sizes from './utils/Sizes.js';
+import ModelLoader from '../../../pkg/utils/GLTFLoader.js';
+import ThreejsApplication from '../../../pkg/ThreejsApplication.js';
+import useModelsUtils from "../../../pkg/utils/use-models-utils.js";
 
 // const stats = new Stats()
 // stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
