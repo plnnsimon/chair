@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import TWEEN from '@tweenjs/tween.js';
 
 export default function useModelsUtils() {
     const time = new THREE.Clock();
@@ -42,7 +41,6 @@ export default function useModelsUtils() {
         if (ctx.camera && ctx.renderer) {
             ctx.camera.update(delta);
             ctx.renderer.update(delta);
-            TWEEN.update();
         }
 
         if (ctx.mixer) {

@@ -1,19 +1,21 @@
-import * as THREE from "three";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
-import { Clock, HalfFloatType } from "three";
+import * as THREE from 'three';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+import { HalfFloatType, UnsignedByteType, Clock } from 'three';
 import {
   EffectComposer,
-  BlendFunction,
   RenderPass,
   EffectPass,
-  DepthOfFieldEffect,
-  TextureEffect,
-  DepthEffect,
-  VignetteEffect,
-  OutlineEffect,
-} from "postprocessing";
-import { VelocityDepthNormalPass } from "realism-effects";
-import {CSS2DRenderer} from 'three/addons/renderers/CSS2DRenderer';
+  ToneMappingEffect,
+  ToneMappingMode,
+  FXAAEffect,
+  BlendFunction
+} from 'postprocessing';
+import {
+  VelocityDepthNormalPass,
+  HBAOEffect,
+  TRAAEffect,
+  SSAOEffect
+} from 'realism-effects';
 
 export default class Renderer {
   constructor(application) {
@@ -35,55 +37,45 @@ export default class Renderer {
 
   setRenderer() {
     this.instance = new THREE.WebGLRenderer({
-      alpha: true,
       canvas: this.canvas,
-      powerPreference: "high-performance",
-      antialias: false,
+      powerPreference: 'high-performance',
       premultipliedAlpha: false,
+      stencil: false,
+      antialias: false,
+      alpha: false,
+      preserveDrawingBuffer: true
     });
     this.instance.shadowMap.enabled = true;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
     this.instance.shadowMap.needsUpdate = true;
-    this.instance.toneMapping = THREE.ACESFilmicToneMapping;
-    this.instance.toneMappingExposure = 0.6;
+    this.instance.shadowMap.autoUpdate = true;
+    this.instance.shadowMapSoft = true;
+    this.instance.toneMapping = THREE.LinearToneMapping
+    this.instance.toneMappingExposure = 0.51;
     this.instance.autoClear = false;
     this.instance.setClearColor(0x000000, 0);
-    this.instance.useLegacyLights = true;
     this.instance.physicallyCorrectLights = true;
 
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
-    // const BACKGROUND_COLOR = 0xd1016;
-    const BACKGROUND_COLOR = '#404753';
+    const BACKGROUND_COLOR = '#FFFFFF';
 
-    this.loadEnv("/textures/env-map.hdr");
+    this.loadEnv('/src/js/applications/textures/env-map.hdr');
 
-    // const bgTexture = new THREE.TextureLoader().load('/textures/transparent-logo.png');
-    // // bgTexture.bac
-    // bgTexture.premultiplyAlpha = true
-    // bgTexture.encoding = THREE.sRGBEncoding;
-    // bgTexture.colorSpace = THREE.sRGBEncoding;
-    // this.scene.background = bgTexture;
     this.scene.background = new THREE.Color(BACKGROUND_COLOR);
-    this.scene.background.encoding = THREE.sRGBEncoding;
-    this.scene.background.colorSpace = THREE.sRGBEncoding;
+    this.scene.background.encoding = THREE.SRGBColorSpace;
+    this.scene.background.colorSpace = THREE.SRGBColorSpace;
     this.scene.background.minFilter = THREE.LinearFilter;
     this.scene.background.magFilter = THREE.LinearFilter;
 
-    // const colorObj = {
-    //   color: '#404753'
-    // }
-    // const sceneSettings = this.gui.addFolder("Scene");
-    // sceneSettings.addColor(colorObj, 'color').onChange((value) => {
-    //     this.scene.background = new THREE.Color(value)
-    //     })
-    // sceneSettings.add(this.instance, "toneMappingExposure", 0, 5, 0.01);
+    // const sceneSettings = this.application.gui.addFolder('Scene');
+    // sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
     // sceneSettings
-    //   .add(this.instance, "toneMapping", {
+    //   .add(this.instance, 'toneMapping', {
     //     No: THREE.NoToneMapping,
     //     Linear: THREE.LinearToneMapping,
     //     Reinhard: THREE.ReinhardToneMapping,
     //     Cineon: THREE.CineonToneMapping,
-    //     ACESFilmic: THREE.ACESFilmicToneMapping,
+    //     ACESFilmic: THREE.ACESFilmicToneMapping
     //   })
     //   .onFinishChange(() => {
     //     this.instance.toneMapping = Number(this.instance.toneMapping);
@@ -91,99 +83,96 @@ export default class Renderer {
   }
 
   setPostprocessing() {
-    // Render pass
     const renderPass = new RenderPass(this.scene, this.camera.instance);
 
     this.composer = new EffectComposer(this.instance, {
       multisampling: Math.min(2, this.instance.capabilities.maxSamples),
-      frameBufferType: HalfFloatType,
+      frameBufferType: HalfFloatType
     });
     this.composer.addPass(renderPass);
 
-    // const velocityDepthNormalPass = new VelocityDepthNormalPass(
+    const velocityDepthNormalPass = new VelocityDepthNormalPass(
+      this.scene,
+      this.camera.instance
+    );
+    this.composer.addPass(velocityDepthNormalPass);
+
+    const toneMapping = new ToneMappingEffect({
+      blendFunction: BlendFunction.NORMAL,
+      // adaptive: true, // Adaptive tonemapping based on luminance
+      resolution: 1024, // Luminance texture resolution
+      middleGrey: 0.0, // Middle grey factor
+      maxLuminance: 10.0, // Maximum luminance
+      averageLuminance: 1.0, // Average luminance
+      adaptationRate: 1.0,
+      mode: ToneMappingMode.LINEAR 
+    });
+
+    const ssaoEffect = new SSAOEffect(
+      this.composer,
+      this.camera.instance,
+      this.scene,
+      {
+        resolutionScale: 1,
+        spp: 12,
+        distance: 1,
+        distancePower: 1.0,
+        power: 1,
+        bias: 0,
+        thickness: 0,
+        color: new THREE.Color('black')
+      }
+    );
+    const hbaoEffect = new HBAOEffect(
+      this.composer,
+      this.camera.instance,
+      this.scene,
+      {
+        resolutionScale: 1,
+        spp: 1,
+        distance: 0.08,
+        distancePower: 1.0,
+        power: 1.0,
+        bias: 0.025,
+        thickness: 0.05,
+        color: new THREE.Color('black')
+      }
+    );
+
+    // const lightFolder = this.application.gui.addFolder("Shadow");
+    // lightFolder.add(ssaoEffect, "bias", 0, 100, 0.01);
+    // lightFolder.add(ssaoEffect, "resolutionScale", -10, 10, 0.001);
+    // lightFolder.add(ssaoEffect, "spp", -10, 10, 0.001);
+    // lightFolder.add(ssaoEffect, "distance", -10, 10, 0.001);
+    // lightFolder.add(ssaoEffect, "distancePower", -10, 10, 0.001);
+    // lightFolder.add(ssaoEffect, "power", -10, 10, 0.001);
+    // lightFolder.add(ssaoEffect, "thickness", -10, 10, 0.001);
+
+    console.log(hbaoEffect, ' hbaoEffect');
+    const smaaEffect = new FXAAEffect({
+      blendFunction: BlendFunction.ADD
+    });
+    // const traaEffect = new TRAAEffect(
     //   this.scene,
-    //   this.camera.instance
+    //   this.camera.instance,
+    //   velocityDepthNormalPass,
+    //   {
+    //     blendFunction: BlendFunction.ADD,
+    //     jitter: 0.05,
+    //     sharpness: 0.05,
+    //     resolutionScale: 2,
+    //     blend: 0.87
+    //   }
     // );
-    // this.composer.addPass(velocityDepthNormalPass);
-
-    this.instance.outlineEffect = new OutlineEffect(this.scene, this.camera.instance, {
-      blendFunction: BlendFunction.SCREEN,
-      multisampling: Math.min(4, this.instance.capabilities.maxSamples),
-      edgeStrength: 2.5,
-      pulseSpeed: 0.0,
-      visibleEdgeColor: 0xffffff,
-      hiddenEdgeColor: 0x22090a,
-      height: 480,
-      blur: false,
-      xRay: true,
-    });
-
-    const depthOfFieldEffect = new DepthOfFieldEffect(this.camera.instance, {
-      focusDistance: 0.5,
-      focalLength: 0.1,
-      bokehScale: 8.0,
-      height: 480,
-    });
-    // const depthOfFieldEffectFolder = this.application.gui.addFolder("depthOfFieldEffectFolder");
-    //
-    // depthOfFieldEffectFolder.add(depthOfFieldEffect, "bokehScale").min(0).max(10).step(0.001);
-
-    const cocTextureEffect = new TextureEffect({
-      blendFunction: BlendFunction.SKIP,
-      texture: depthOfFieldEffect.renderTargetCoC.texture,
-    });
-    const obj = {
-      focusDistance: 0,
-      focalLength: 0,
-    };
-    const cocMaterial = depthOfFieldEffect.circleOfConfusionMaterial;
-    // depthOfFieldEffectFolder.add(obj, "focusDistance").min(0).max(2).step(0.001).onChange((val) => {
-    //   cocMaterial.uniforms.focusDistance.value = val
-    // })
-    // depthOfFieldEffectFolder.add(obj, "focalLength").min(0).max(2).step(0.001).onChange((val) => {
-    //   cocMaterial.uniforms.focalLength.value = val
-    // })
-    this.instance.cocMaterial = cocMaterial;
-    this.instance.depthOfFieldEffect = depthOfFieldEffect;
-
-    const depthEffect = new DepthEffect({
-      blendFunction: BlendFunction.SKIP,
-    });
-
-    const vignetteEffect = new VignetteEffect({
-      eskil: false,
-      offset: 0.7,
-      darkness: 0.265,
-    });
-    // const vignetteEffectFolder = this.application.gui.addFolder("vignetteEffect");
-    // vignetteEffectFolder
-    //   .add(vignetteEffect, "darkness")
-    //   .min(0)
-    //   .max(10)
-    //   .step(0.001);
-    // vignetteEffectFolder
-    //   .add(vignetteEffect, "offset")
-    //   .min(0)
-    //   .max(10)
-    //   .step(0.001);
-
     this.composer.addPass(
       new EffectPass(
         this.camera.instance,
-        depthOfFieldEffect,
-        depthEffect,
-        cocTextureEffect,
-        this.instance.outlineEffect,
-        vignetteEffect,
+        hbaoEffect,
+        ssaoEffect,
+        toneMapping,
       )
     );
-
-    this.labelRenderer = new CSS2DRenderer()
-    this.labelRenderer.setSize(this.sizes.width, this.sizes.height);
-    this.labelRenderer.domElement.style.position = 'absolute'
-    this.labelRenderer.domElement.style.top = '0px'
-    this.labelRenderer.domElement.style.pointerEvents = 'none'
-    this.application.canvasDomElement.appendChild(this.labelRenderer.domElement)
+    this.composer.addPass(new EffectPass(this.camera.instance, smaaEffect));
   }
 
   loadEnv(file) {
@@ -192,7 +181,7 @@ export default class Renderer {
       const envmap = generator.fromEquirectangular(hdrmap);
       envmap.mapping = THREE.EquirectangularReflectionMapping;
       this.scene.environment = envmap.texture;
-      this.scene.environment.colorSpace = THREE.sRGBEncoding;
+      this.scene.environment.colorSpace = THREE.SRGBColorSpace;
     });
   }
 
@@ -200,8 +189,6 @@ export default class Renderer {
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
     this.composer.setSize(this.sizes.width, this.sizes.height);
-    this.labelRenderer.setSize(this.sizes.width, this.sizes.height);
-    // this.composer.setPixelRatio(this.sizes.pixelRatio);
   }
 
   update() {
@@ -211,8 +198,6 @@ export default class Renderer {
     if (elapsed > this.interval) {
       const time = new Clock().getDelta();
       this.composer.render(time);
-      this.labelRenderer.render(this.scene, this.camera.instance)
-      // this.instance.render(this.scene, this.camera.instance);
     }
   }
 }

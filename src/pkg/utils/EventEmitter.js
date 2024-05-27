@@ -4,6 +4,8 @@ export default class EventEmitter {
   }
 
   notify(eventType, data) {
+    if (!this.collection[eventType]) return
+
     for (const item of this.collection[eventType]) {
       item(data)
     }

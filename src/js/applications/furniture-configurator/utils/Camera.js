@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export default class Camera {
   constructor(application) {
@@ -28,19 +29,19 @@ export default class Camera {
       60,
       this.sizes.aspect,
       0.1,
-      100
+      15
     );
     // this.instance.position.x = -1.5;
     // this.instance.position.z = -1;
     // this.instance.position.y = 1;
 
-    this.instance.position.set(-3, 3, -3)
+    this.instance.position.set(-0.7, 0.8, 1.5)
   }
 
   setOrbitControls() {
     this.controls = new OrbitControls(this.instance, this.canvas);
     // this.controls.enableDamping = true
-    this.controls.target.set(0, 0, 0);
+    this.controls.target.set(0, 0.5, 0);
     this.controls.enabled = true;
     this.controls.enablePan = false;
     // this.controls.enableZoom = true;
@@ -49,11 +50,11 @@ export default class Camera {
     // this.controls.enablePan = false;
     // Zoom in / zoom out
 
-    this.controls.minDistance = 1.3;
-    this.controls.maxDistance = 6;
+    this.controls.minDistance = 0.5;
+    this.controls.maxDistance = 3;
     // Where to stop rotation :
 
-    this.controls.minPolarAngle = 0.2; // radians
+    this.controls.minPolarAngle = 0.1; // radians
     this.controls.maxPolarAngle = Math.PI / 2 - 0.05;
   }
 

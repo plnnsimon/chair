@@ -1,4 +1,4 @@
-import EventEmitter from "@/three/utils/EventEmitter";
+import EventEmitter from "@/pkg/utils/EventEmitter.js";
 
 export default class Sizes extends EventEmitter {
     constructor(canvasContainer) {
