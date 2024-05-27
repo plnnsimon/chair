@@ -3,7 +3,7 @@ import legacy from '@vitejs/plugin-legacy';
 import path from 'path';
 
 export default defineConfig({
-  base: '/chair/',
+  base: '/',
 
   // envDir,
 
@@ -16,6 +16,8 @@ export default defineConfig({
   // },
 
   build: {
+    sourcemap: true,
+    
     rollupOptions: {
       input: 'index.html'
     }
