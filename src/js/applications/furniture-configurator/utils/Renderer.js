@@ -59,7 +59,7 @@ export default class Renderer {
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
     const BACKGROUND_COLOR = '#FFFFFF';
 
-    this.loadEnv('/src/js/applications/textures/env-map.hdr');
+    this.loadEnv('/textures/env-map.hdr');
 
     this.scene.background = new THREE.Color(BACKGROUND_COLOR);
     this.scene.background.encoding = THREE.SRGBColorSpace;
