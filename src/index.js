@@ -1,5 +1,5 @@
-import { FurnitureApplication } from '@/js/applications/furniture-configurator/index.js'
-import EventEmitter from '@/pkg/utils/EventEmitter.js'
+import { FurnitureApplication } from './js/applications/furniture-configurator/index.js'
+import EventEmitter from './pkg/utils/EventEmitter.js'
 
 const emitter = new EventEmitter()
 // const planetsApplication = new PlanetsApplication('/src/js/models/Planet_Final.glb')
