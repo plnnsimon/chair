@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "copy-realism-effects": "cp -r node_modules/realism-effects/dist assets/vendor/realism-effects"
+  
   },
   "dependencies": {
     "postprocessing": "^6.35.4",
