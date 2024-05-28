@@ -84,7 +84,7 @@ export default class SceneLights {
     this.scene.add(directionLight2);
     // const helper1 = new THREE.DirectionalLightHelper(directionLight, 1);
 
-    this.scene.add(hemiLight);
+    // this.scene.add(hemiLight);
     // this.scene.add(helper1);
     // const lightFolder = this.application.gui.addFolder("Light");
     // lightFolder.add(directionLight, "intensity", 0, 100, 0.01);
