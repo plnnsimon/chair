@@ -111,12 +111,12 @@ export class FurnitureApplication extends ThreejsApplication {
       // el.castShadow = true;
       // el.receiveShadow = true;
 
-      // if (el.name.includes('wood')) {
-      //   this.gui.add(el.material, 'roughness', 0, 1, 0.001)
-      //   this.gui.add(el.material, 'metalness', 0, 1, 0.001)
-      //   // el.material.roughnessMap = null
-      //   // el.material.metalnessMap = null
-      // }
+      if (el.name.includes('wood')) {
+        // this.gui.add(el.material, 'roughness', 0, 1, 0.001)
+        // this.gui.add(el.material, 'metalness', 0, 1, 0.001)
+        el.material.roughness = 0.65
+        el.material.metalness = 1
+      }
 
       // if (el.name.includes('fabric')) {
       //   this.gui.add(el.material, 'roughness', 0, 1, 0.001).name('Fabric R')
@@ -138,7 +138,7 @@ export class FurnitureApplication extends ThreejsApplication {
       mapTexture.repeat.set(3, 3);
     }
     if (name === 'fabric') {
-      mapTexture.repeat.set(10, 10);
+      mapTexture.repeat.set(5, 5);
     }
     mapTexture.flipY = false;
     // // mapTexture.offset.set(0.5, 0.5);
