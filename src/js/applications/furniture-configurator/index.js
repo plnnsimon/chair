@@ -114,8 +114,8 @@ export class FurnitureApplication extends ThreejsApplication {
       if (el.name.includes('wood')) {
         // this.gui.add(el.material, 'roughness', 0, 1, 0.001)
         // this.gui.add(el.material, 'metalness', 0, 1, 0.001)
-        el.material.roughness = 0.65
-        el.material.metalness = 1
+        el.material.roughness = 0.45
+        el.material.metalness = 0.95
       }
 
       // if (el.name.includes('fabric')) {

@@ -77,11 +77,18 @@ export default class SceneLights {
     const hemiLight = new THREE.HemisphereLight('#ffffff', '#ffffff', 1)
 
     const directionLight2 = this.getPointLights({
-      position: { x: -1, y: 1, z: 1 },
-      intensity: 10,
+      position: { x: -1.5, y: 1, z: 1 },
+      intensity: 15,
     });
     directionLight2.castShadow = false
     this.scene.add(directionLight2);
+
+    const directionLight3 = this.getPointLights({
+      position: { x: 1.5, y: 1, z: -1 },
+      intensity: 15,
+    });
+    directionLight2.castShadow = false
+    this.scene.add(directionLight3);
     // const helper1 = new THREE.DirectionalLightHelper(directionLight, 1);
 
     // this.scene.add(hemiLight);

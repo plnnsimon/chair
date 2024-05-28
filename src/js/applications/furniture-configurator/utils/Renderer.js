@@ -56,7 +56,7 @@ export default class Renderer {
     this.instance.shadowMapSoft = true;
     // this.instance.toneMapping = THREE.LinearToneMapping
     this.instance.toneMapping = THREE.ACESFilmicToneMapping
-    this.instance.toneMappingExposure = 0.6;
+    this.instance.toneMappingExposure = 0.75;
     this.instance.autoClear = false;
     this.instance.setClearColor(0x000000, 0);
     this.instance.physicallyCorrectLights = true;
@@ -64,7 +64,7 @@ export default class Renderer {
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
     const BACKGROUND_COLOR = '#FFFFFF';
 
-    this.loadEnv('assets/textures/env-map.hdr');
+    // this.loadEnv('assets/textures/env-map.hdr');
 
     this.scene.background = new THREE.Color(BACKGROUND_COLOR);
     this.scene.background.encoding = THREE.SRGBColorSpace;
