@@ -1,0 +1,3 @@
+# _config.yml
+include:
+  - node_modules/realism-effects/dist/index.js

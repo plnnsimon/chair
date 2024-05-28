@@ -37,6 +37,6 @@ export default defineConfig({
   },
 
   optimizeDeps: {
-    include: ['three', 'postprocessing']
+    include: ['three', 'postprocessing', 'realism-effects']
   }
 });
