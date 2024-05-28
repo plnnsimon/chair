@@ -90,15 +90,15 @@ export class FurnitureApplication extends ThreejsApplication {
     // this.setRaycaster();
 
     const geometry = new THREE.PlaneGeometry(10, 10);
-   // const material = new THREE.ShadowMaterial({
-    //   color: 0xffffff,
-    //   side: THREE.DoubleSide,
-    //   // opacity: 0.1
-    // });
-    const material = new THREE.MeshStandardMaterial({
+   const material = new THREE.ShadowMaterial({
       color: 0xffffff,
       side: THREE.DoubleSide,
+      // opacity: 0.1
     });
+    // const material = new THREE.MeshStandardMaterial({
+    //   color: 0xffffff,
+    //   side: THREE.DoubleSide,
+    // });
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = Math.PI / 2;
     plane.position.y = -0;

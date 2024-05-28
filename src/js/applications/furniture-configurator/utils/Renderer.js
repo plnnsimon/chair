@@ -36,7 +36,7 @@ export default class Renderer {
 
     this.setRenderer();
 
-    this.setPostprocessing();
+    // this.setPostprocessing();
   }
 
   setRenderer() {
@@ -45,7 +45,7 @@ export default class Renderer {
       powerPreference: 'high-performance',
       premultipliedAlpha: false,
       stencil: false,
-      antialias: false,
+      antialias: true,
       alpha: false,
       preserveDrawingBuffer: true
     });
@@ -54,8 +54,9 @@ export default class Renderer {
     this.instance.shadowMap.needsUpdate = true;
     this.instance.shadowMap.autoUpdate = true;
     this.instance.shadowMapSoft = true;
-    this.instance.toneMapping = THREE.LinearToneMapping
-    this.instance.toneMappingExposure = 0.51;
+    // this.instance.toneMapping = THREE.LinearToneMapping
+    this.instance.toneMapping = THREE.ACESFilmicToneMapping
+    this.instance.toneMappingExposure = 0.55;
     this.instance.autoClear = false;
     this.instance.setClearColor(0x000000, 0);
     this.instance.physicallyCorrectLights = true;
@@ -192,16 +193,17 @@ export default class Renderer {
   resize() {
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
-    this.composer.setSize(this.sizes.width, this.sizes.height);
+    // this.composer.setSize(this.sizes.width, this.sizes.height);
   }
 
   update() {
     const now = Date.now();
     const elapsed = now - this.then;
 
-    if (elapsed > this.interval) {
-      const time = new Clock().getDelta();
-      this.composer.render(time);
-    }
+    // if (elapsed > this.interval) {
+    //   const time = new Clock().getDelta();
+    //   this.composer.render(time);
+    // }
+    this.instance.render(this.scene, this.camera.instance);
   }
 }
