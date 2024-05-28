@@ -1,3 +1,3 @@
 # _config.yml
 include:
-  - assets/vendor/realism-effects/index.js
+  - node_modules/
