@@ -15,7 +15,7 @@ import {
   HBAOEffect,
   TRAAEffect,
   SSAOEffect
-} from '/assets/vendor/realism-effects/index.js';
+} from 'realism-effects';
 
 export default class Renderer {
   constructor(application) {

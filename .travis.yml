@@ -1,0 +1,4 @@
+# _config.yml
+include:
+  - node_modules/
+  - vendor/
