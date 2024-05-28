@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import { RGBELoader } from 'https://threejs.org/examples/jsm/loaders/RGBELoader.js';
-import { HalfFloatType, UnsignedByteType, Clock } from 'three';
+import { 
+  HalfFloatType, 
+  // UnsignedByteType, 
+  Clock 
+} from 'three';
 import {
   EffectComposer,
   RenderPass,
@@ -13,7 +17,7 @@ import {
 import {
   VelocityDepthNormalPass,
   HBAOEffect,
-  TRAAEffect,
+  // TRAAEffect,
   SSAOEffect
 } from 'realism-effects';
 
