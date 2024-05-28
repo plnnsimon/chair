@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js'
 
 export default class Camera {
   constructor(application) {
