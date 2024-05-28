@@ -142,8 +142,8 @@ export class FurnitureApplication extends ThreejsApplication {
     }
     mapTexture.flipY = false;
     // // mapTexture.offset.set(0.5, 0.5);
-    mapTexture.minFilter = THREE.LinearFilter;
-    mapTexture.magFilter = THREE.LinearFilter;
+    // mapTexture.minFilter = THREE.LinearFilter;
+    // mapTexture.magFilter = THREE.LinearFilter;
 
     if (!mapTexture) {
       return;
@@ -157,7 +157,7 @@ export class FurnitureApplication extends ThreejsApplication {
         // }
         if (name === 'fabric') {
           el.material.roughness = 1
-          el.material.metalness = 1
+          el.material.metalness = 0.9
         }
         el.material.map = mapTexture;
         el.material.needsUpdate = true;
