@@ -72,19 +72,19 @@ export default class Renderer {
     this.scene.background.minFilter = THREE.LinearFilter;
     this.scene.background.magFilter = THREE.LinearFilter;
 
-    const sceneSettings = this.application.gui.addFolder('Scene');
-    sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
-    sceneSettings
-      .add(this.instance, 'toneMapping', {
-        No: THREE.NoToneMapping,
-        Linear: THREE.LinearToneMapping,
-        Reinhard: THREE.ReinhardToneMapping,
-        Cineon: THREE.CineonToneMapping,
-        ACESFilmic: THREE.ACESFilmicToneMapping
-      })
-      .onFinishChange(() => {
-        this.instance.toneMapping = Number(this.instance.toneMapping);
-      });
+    // const sceneSettings = this.application.gui.addFolder('Scene');
+    // sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
+    // sceneSettings
+    //   .add(this.instance, 'toneMapping', {
+    //     No: THREE.NoToneMapping,
+    //     Linear: THREE.LinearToneMapping,
+    //     Reinhard: THREE.ReinhardToneMapping,
+    //     Cineon: THREE.CineonToneMapping,
+    //     ACESFilmic: THREE.ACESFilmicToneMapping
+    //   })
+    //   .onFinishChange(() => {
+    //     this.instance.toneMapping = Number(this.instance.toneMapping);
+    //   });
   }
 
   setPostprocessing() {

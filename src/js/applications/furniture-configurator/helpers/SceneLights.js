@@ -11,7 +11,7 @@ export default class SceneLights {
   }
 
   getDirectionalLights(options = {}) {
-    const SHADOW_SIZE = 2048
+    const SHADOW_SIZE = 4098
     // const SHADOW_SIZE = 512
     const pos = options.position || {
       x: 0,
@@ -39,7 +39,7 @@ export default class SceneLights {
   }
 
   getPointLights(options = {}) {
-    const SHADOW_SIZE = 2048
+    const SHADOW_SIZE = 4098
     // const SHADOW_SIZE = 512
     const pos = options.position || {
       x: 0,
@@ -67,7 +67,7 @@ export default class SceneLights {
 
   initializeLights() {
     const directionLight = this.getDirectionalLights({
-      position: { x: 0, y: 5, z: -0.5 },
+      position: { x: 0, y: 5, z: 1 },
       intensity: 5,
     });
     // const helper1 = new THREE.DirectionalLightHelper(directionLight, 1);
@@ -77,7 +77,7 @@ export default class SceneLights {
     const hemiLight = new THREE.HemisphereLight('#ffffff', '#ffffff', 3)
 
     const directionLight2 = this.getPointLights({
-      position: { x: -1.8, y: 1, z: 1 },
+      position: { x: -1.8, y: 1, z: 0 },
       intensity: 35,
     });
     // directionLight2.castShadow = true
@@ -95,17 +95,17 @@ export default class SceneLights {
     this.scene.add(hemiLight);
     // this.scene.add(helper1);
     // this.scene.add(helper2);
-    const lightFolder = this.application.gui.addFolder("Light");
-    lightFolder.add(directionLight, "intensity", 0, 100, 0.01);
-    lightFolder.add(directionLight.position, "x", -10, 10, 0.001);
-    lightFolder.add(directionLight.position, "y", -10, 10, 0.001);
-    lightFolder.add(directionLight.position, "z", -10, 10, 0.001);
-    // this.scene.add(helper1);
-    const lightFolder2 = this.application.gui.addFolder("Light 2");
-    lightFolder2.add(directionLight2, "intensity", 0, 100, 0.01);
-    lightFolder2.add(directionLight2.position, "x", -10, 10, 0.001);
-    lightFolder2.add(directionLight2.position, "y", -10, 10, 0.001);
-    lightFolder2.add(directionLight2.position, "z", -10, 10, 0.001);
+    // const lightFolder = this.application.gui.addFolder("Light");
+    // lightFolder.add(directionLight, "intensity", 0, 100, 0.01);
+    // lightFolder.add(directionLight.position, "x", -10, 10, 0.001);
+    // lightFolder.add(directionLight.position, "y", -10, 10, 0.001);
+    // lightFolder.add(directionLight.position, "z", -10, 10, 0.001);
+    // // this.scene.add(helper1);
+    // const lightFolder2 = this.application.gui.addFolder("Light 2");
+    // lightFolder2.add(directionLight2, "intensity", 0, 100, 0.01);
+    // lightFolder2.add(directionLight2.position, "x", -10, 10, 0.001);
+    // lightFolder2.add(directionLight2.position, "y", -10, 10, 0.001);
+    // lightFolder2.add(directionLight2.position, "z", -10, 10, 0.001);
     // const colorObj = { color: '#FFFFFF' }
     // lightFolder.addColor(colorObj, 'color').onChange((value) => {
     //   directionLight.color = new THREE.Color(value)
