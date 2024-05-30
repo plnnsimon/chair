@@ -11,8 +11,8 @@ export default class SceneLights {
   }
 
   getDirectionalLights(options = {}) {
-    const SHADOW_SIZE = 4098
-    // const SHADOW_SIZE = 512
+    // const SHADOW_SIZE = 4098
+    const SHADOW_SIZE = 512
     const pos = options.position || {
       x: 0,
       y: 0,
@@ -39,8 +39,8 @@ export default class SceneLights {
   }
 
   getPointLights(options = {}) {
-    const SHADOW_SIZE = 4098
-    // const SHADOW_SIZE = 512
+    // const SHADOW_SIZE = 4098
+    const SHADOW_SIZE = 512
     const pos = options.position || {
       x: 0,
       y: 0,

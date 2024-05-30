@@ -94,7 +94,7 @@ export class FurnitureApplication extends ThreejsApplication {
    const material = new THREE.ShadowMaterial({
       color: 0xffffff,
       side: THREE.DoubleSide,
-      // opacity: 0.1
+      opacity: 0.5
     });
     // const material = new THREE.MeshStandardMaterial({
     //   color: 0xffffff,
