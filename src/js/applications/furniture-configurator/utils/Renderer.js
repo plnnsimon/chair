@@ -72,19 +72,19 @@ export default class Renderer {
     this.scene.background.minFilter = THREE.LinearFilter;
     this.scene.background.magFilter = THREE.LinearFilter;
 
-    const sceneSettings = this.application.gui.addFolder('Scene');
-    sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
-    sceneSettings
-      .add(this.instance, 'toneMapping', {
-        No: THREE.NoToneMapping,
-        Linear: THREE.LinearToneMapping,
-        Reinhard: THREE.ReinhardToneMapping,
-        Cineon: THREE.CineonToneMapping,
-        ACESFilmic: THREE.ACESFilmicToneMapping
-      })
-      .onFinishChange(() => {
-        this.instance.toneMapping = Number(this.instance.toneMapping);
-      });
+    // const sceneSettings = this.application.gui.addFolder('Scene');
+    // sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
+    // sceneSettings
+    //   .add(this.instance, 'toneMapping', {
+    //     No: THREE.NoToneMapping,
+    //     Linear: THREE.LinearToneMapping,
+    //     Reinhard: THREE.ReinhardToneMapping,
+    //     Cineon: THREE.CineonToneMapping,
+    //     ACESFilmic: THREE.ACESFilmicToneMapping
+    //   })
+    //   .onFinishChange(() => {
+    //     this.instance.toneMapping = Number(this.instance.toneMapping);
+    //   });
   }
 
   setPostprocessing() {
@@ -159,23 +159,23 @@ export default class Renderer {
       }
     );
 
-    const lightFolder = this.application.gui.addFolder("Shadow");
-    lightFolder.add(ssaoEffect, "bias", 0, 20, 0.01);
-    lightFolder.add(ssaoEffect, "resolutionScale", 0, 20, 0.001);
-    lightFolder.add(ssaoEffect, "spp", 0, 20, 0.001);
-    lightFolder.add(ssaoEffect, "distance", 0, 20, 0.001);
-    lightFolder.add(ssaoEffect, "distancePower", 0, 20, 0.001);
-    lightFolder.add(ssaoEffect, "power", 0, 20, 0.001);
-    lightFolder.add(ssaoEffect, "thickness", 0, 20, 0.001);
+    // const lightFolder = this.application.gui.addFolder("Shadow");
+    // lightFolder.add(ssaoEffect, "bias", 0, 20, 0.01);
+    // lightFolder.add(ssaoEffect, "resolutionScale", 0, 20, 0.001);
+    // lightFolder.add(ssaoEffect, "spp", 0, 20, 0.001);
+    // lightFolder.add(ssaoEffect, "distance", 0, 20, 0.001);
+    // lightFolder.add(ssaoEffect, "distancePower", 0, 20, 0.001);
+    // lightFolder.add(ssaoEffect, "power", 0, 20, 0.001);
+    // lightFolder.add(ssaoEffect, "thickness", 0, 20, 0.001);
 
-    const lightFolder2 = this.application.gui.addFolder("Shadow 2");
-    lightFolder2.add(hbaoEffect, "bias", 0, 20, 0.01);
-    lightFolder2.add(hbaoEffect, "resolutionScale", 0, 20, 0.001);
-    lightFolder2.add(hbaoEffect, "spp", 0, 20, 0.001);
-    lightFolder2.add(hbaoEffect, "distance", 0, 20, 0.001);
-    lightFolder2.add(hbaoEffect, "distancePower", 0, 20, 0.001);
-    lightFolder2.add(hbaoEffect, "power", 0, 20, 0.001);
-    lightFolder2.add(hbaoEffect, "thickness", 0, 20, 0.001);
+    // const lightFolder2 = this.application.gui.addFolder("Shadow 2");
+    // lightFolder2.add(hbaoEffect, "bias", 0, 20, 0.01);
+    // lightFolder2.add(hbaoEffect, "resolutionScale", 0, 20, 0.001);
+    // lightFolder2.add(hbaoEffect, "spp", 0, 20, 0.001);
+    // lightFolder2.add(hbaoEffect, "distance", 0, 20, 0.001);
+    // lightFolder2.add(hbaoEffect, "distancePower", 0, 20, 0.001);
+    // lightFolder2.add(hbaoEffect, "power", 0, 20, 0.001);
+    // lightFolder2.add(hbaoEffect, "thickness", 0, 20, 0.001);
 
     console.log(hbaoEffect, ' hbaoEffect');
     const smaaEffect = new FXAAEffect({
