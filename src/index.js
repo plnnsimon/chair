@@ -36,4 +36,5 @@ color.addEventListener('input', (ev) => {
 
 // furnitureApplication.initGLTFLoader("/src/js/models/model.glb")
 // furnitureApplication.initGLTFLoader("assets/models/sinteponchair.glb")
-furnitureApplication.initGLTFLoader("assets/models/Chair.glb")
+furnitureApplication.initGLTFLoader("assets/models/SinteponС.glb")
+// furnitureApplication.initGLTFLoader("assets/models/Chair.glb")
