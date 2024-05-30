@@ -2,7 +2,7 @@ import * as THREE from "three";
 import Camera from "./utils/Camera.js";
 import Renderer from "./utils/Renderer.js";
 import SceneLights from "./helpers/SceneLights.js";
-// import { GUI } from "dat.gui";
+import { GUI } from "dat.gui";
 import Sizes from './utils/Sizes.js';
 import ModelLoader from '../../../pkg/utils/GLTFLoader.js';
 import ThreejsApplication from '../../../pkg/ThreejsApplication.js';
@@ -38,8 +38,8 @@ export class FurnitureApplication extends ThreejsApplication {
     this.canIntersect = true;
     this.showRangeMaterialList = false;
     this.sizes = null;
-    // this.gui = new GUI();
-    this.gui = null
+    this.gui = new GUI();
+    // this.gui = null
     this.sceneLights = new SceneLights(this);
   }
 
@@ -90,15 +90,15 @@ export class FurnitureApplication extends ThreejsApplication {
     // this.setRaycaster();
 
     const geometry = new THREE.PlaneGeometry(10, 10);
-   const material = new THREE.ShadowMaterial({
+  //  const material = new THREE.ShadowMaterial({
+  //     color: 0xffffff,
+  //     side: THREE.DoubleSide,
+  //     // opacity: 0.1
+  //   });
+    const material = new THREE.MeshStandardMaterial({
       color: 0xffffff,
       side: THREE.DoubleSide,
-      // opacity: 0.1
     });
-    // const material = new THREE.MeshStandardMaterial({
-    //   color: 0xffffff,
-    //   side: THREE.DoubleSide,
-    // });
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = Math.PI / 2;
     plane.position.y = -0;

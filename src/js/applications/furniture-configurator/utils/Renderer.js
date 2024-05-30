@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { RGBELoader } from 'https://threejs.org/examples/jsm/loaders/RGBELoader.js';
-import { 
-  HalfFloatType, 
-  // UnsignedByteType, 
-  Clock 
+import {
+  HalfFloatType,
+  // UnsignedByteType,
+  Clock
 } from 'three';
 import {
   EffectComposer,
@@ -36,7 +36,7 @@ export default class Renderer {
 
     this.setRenderer();
 
-    // this.setPostprocessing();
+    this.setPostprocessing();
   }
 
   setRenderer() {
@@ -55,8 +55,8 @@ export default class Renderer {
     this.instance.shadowMap.autoUpdate = true;
     this.instance.shadowMapSoft = true;
     // this.instance.toneMapping = THREE.LinearToneMapping
-    this.instance.toneMapping = THREE.ACESFilmicToneMapping
-    this.instance.toneMappingExposure = 0.75;
+    // this.instance.toneMapping = THREE.ACESFilmicToneMapping
+    this.instance.toneMappingExposure = 1;
     this.instance.autoClear = false;
     this.instance.setClearColor(0x000000, 0);
     this.instance.physicallyCorrectLights = true;
@@ -72,27 +72,42 @@ export default class Renderer {
     this.scene.background.minFilter = THREE.LinearFilter;
     this.scene.background.magFilter = THREE.LinearFilter;
 
-    // const sceneSettings = this.application.gui.addFolder('Scene');
-    // sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
-    // sceneSettings
-    //   .add(this.instance, 'toneMapping', {
-    //     No: THREE.NoToneMapping,
-    //     Linear: THREE.LinearToneMapping,
-    //     Reinhard: THREE.ReinhardToneMapping,
-    //     Cineon: THREE.CineonToneMapping,
-    //     ACESFilmic: THREE.ACESFilmicToneMapping
-    //   })
-    //   .onFinishChange(() => {
-    //     this.instance.toneMapping = Number(this.instance.toneMapping);
-    //   });
+    const sceneSettings = this.application.gui.addFolder('Scene');
+    sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
+    sceneSettings
+      .add(this.instance, 'toneMapping', {
+        No: THREE.NoToneMapping,
+        Linear: THREE.LinearToneMapping,
+        Reinhard: THREE.ReinhardToneMapping,
+        Cineon: THREE.CineonToneMapping,
+        ACESFilmic: THREE.ACESFilmicToneMapping
+      })
+      .onFinishChange(() => {
+        this.instance.toneMapping = Number(this.instance.toneMapping);
+      });
   }
 
   setPostprocessing() {
     const renderPass = new RenderPass(this.scene, this.camera.instance);
 
+    // const renderTargetParameters = {
+    //   minFilter: THREE.LinearFilter,
+    //   magFilter: THREE.LinearFilter,
+    //   format: THREE.RGBAFormat,
+    //   colorSpace: THREE.SRGBColorSpace,
+    //   type: THREE.UnsignedByteType,
+    //   count: 2 // Number of render targets
+    // };
+    
+    // const renderTarget = new THREE.WebGLRenderTarget(
+    //   1000,
+    //   1000,
+    //   renderTargetParameters,
+    // );
+
     this.composer = new EffectComposer(this.instance, {
-      multisampling: Math.min(2, this.instance.capabilities.maxSamples),
-      frameBufferType: HalfFloatType
+      multisampling: Math.min(4, this.instance.capabilities.maxSamples),
+      frameBufferType: HalfFloatType,
     });
     this.composer.addPass(renderPass);
 
@@ -105,12 +120,12 @@ export default class Renderer {
     const toneMapping = new ToneMappingEffect({
       blendFunction: BlendFunction.NORMAL,
       // adaptive: true, // Adaptive tonemapping based on luminance
-      resolution: 1024, // Luminance texture resolution
+      resolution: 2048, // Luminance texture resolution
       middleGrey: 0.0, // Middle grey factor
       maxLuminance: 10.0, // Maximum luminance
       averageLuminance: 1.0, // Average luminance
       adaptationRate: 1.0,
-      mode: ToneMappingMode.LINEAR 
+      mode: ToneMappingMode.LINEAR
     });
 
     const ssaoEffect = new SSAOEffect(
@@ -119,11 +134,11 @@ export default class Renderer {
       this.scene,
       {
         resolutionScale: 1,
-        spp: 12,
-        distance: 1,
-        distancePower: 1.0,
-        power: 1,
-        bias: 0,
+        spp: 18,
+        distance: 0.8,
+        distancePower: 10.0,
+        power: 2.0,
+        bias: 0.03,
         thickness: 0,
         color: new THREE.Color('black')
       }
@@ -134,28 +149,37 @@ export default class Renderer {
       this.scene,
       {
         resolutionScale: 1,
-        spp: 1,
-        distance: 0.08,
-        distancePower: 1.0,
+        spp: 12,
+        distance: 0.01,
+        distancePower: 5.0,
         power: 1.0,
-        bias: 0.025,
-        thickness: 0.05,
+        bias: 0.0,
+        thickness: 3.05,
         color: new THREE.Color('black')
       }
     );
 
-    // const lightFolder = this.application.gui.addFolder("Shadow");
-    // lightFolder.add(ssaoEffect, "bias", 0, 100, 0.01);
-    // lightFolder.add(ssaoEffect, "resolutionScale", -10, 10, 0.001);
-    // lightFolder.add(ssaoEffect, "spp", -10, 10, 0.001);
-    // lightFolder.add(ssaoEffect, "distance", -10, 10, 0.001);
-    // lightFolder.add(ssaoEffect, "distancePower", -10, 10, 0.001);
-    // lightFolder.add(ssaoEffect, "power", -10, 10, 0.001);
-    // lightFolder.add(ssaoEffect, "thickness", -10, 10, 0.001);
+    const lightFolder = this.application.gui.addFolder("Shadow");
+    lightFolder.add(ssaoEffect, "bias", 0, 20, 0.01);
+    lightFolder.add(ssaoEffect, "resolutionScale", 0, 20, 0.001);
+    lightFolder.add(ssaoEffect, "spp", 0, 20, 0.001);
+    lightFolder.add(ssaoEffect, "distance", 0, 20, 0.001);
+    lightFolder.add(ssaoEffect, "distancePower", 0, 20, 0.001);
+    lightFolder.add(ssaoEffect, "power", 0, 20, 0.001);
+    lightFolder.add(ssaoEffect, "thickness", 0, 20, 0.001);
+
+    const lightFolder2 = this.application.gui.addFolder("Shadow 2");
+    lightFolder2.add(hbaoEffect, "bias", 0, 20, 0.01);
+    lightFolder2.add(hbaoEffect, "resolutionScale", 0, 20, 0.001);
+    lightFolder2.add(hbaoEffect, "spp", 0, 20, 0.001);
+    lightFolder2.add(hbaoEffect, "distance", 0, 20, 0.001);
+    lightFolder2.add(hbaoEffect, "distancePower", 0, 20, 0.001);
+    lightFolder2.add(hbaoEffect, "power", 0, 20, 0.001);
+    lightFolder2.add(hbaoEffect, "thickness", 0, 20, 0.001);
 
     console.log(hbaoEffect, ' hbaoEffect');
     const smaaEffect = new FXAAEffect({
-      blendFunction: BlendFunction.ADD
+      blendFunction: BlendFunction.NORMAL
     });
     // const traaEffect = new TRAAEffect(
     //   this.scene,
@@ -171,10 +195,10 @@ export default class Renderer {
     // );
     this.composer.addPass(
       new EffectPass(
-        this.camera.instance,
-        hbaoEffect,
-        ssaoEffect,
-        toneMapping,
+        this.camera.instance, 
+        hbaoEffect, 
+        ssaoEffect, 
+        toneMapping
       )
     );
     this.composer.addPass(new EffectPass(this.camera.instance, smaaEffect));
@@ -193,17 +217,17 @@ export default class Renderer {
   resize() {
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
-    // this.composer.setSize(this.sizes.width, this.sizes.height);
+    this.composer.setSize(this.sizes.width, this.sizes.height);
   }
 
   update() {
     const now = Date.now();
     const elapsed = now - this.then;
 
-    // if (elapsed > this.interval) {
-    //   const time = new Clock().getDelta();
-    //   this.composer.render(time);
-    // }
-    this.instance.render(this.scene, this.camera.instance);
+    if (elapsed > this.interval) {
+      const time = new Clock().getDelta();
+      this.composer.render(time);
+    }
+    // this.instance.render(this.scene, this.camera.instance);
   }
 }

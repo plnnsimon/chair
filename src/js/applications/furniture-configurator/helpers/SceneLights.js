@@ -11,7 +11,7 @@ export default class SceneLights {
   }
 
   getDirectionalLights(options = {}) {
-    const SHADOW_SIZE = 2048
+    const SHADOW_SIZE = 4098
     // const SHADOW_SIZE = 512
     const pos = options.position || {
       x: 0,
@@ -39,7 +39,7 @@ export default class SceneLights {
   }
 
   getPointLights(options = {}) {
-    const SHADOW_SIZE = 2048
+    const SHADOW_SIZE = 4098
     // const SHADOW_SIZE = 512
     const pos = options.position || {
       x: 0,
@@ -77,14 +77,14 @@ export default class SceneLights {
     const hemiLight = new THREE.HemisphereLight('#ffffff', '#ffffff', 1)
 
     const directionLight2 = this.getPointLights({
-      position: { x: -1.5, y: 1, z: 1 },
+      position: { x: -1.8, y: 1, z: 1 },
       intensity: 15,
     });
     directionLight2.castShadow = false
     this.scene.add(directionLight2);
 
     const directionLight3 = this.getPointLights({
-      position: { x: 1.5, y: 1, z: -1 },
+      position: { x: 1.8, y: 1, z: -1 },
       intensity: 15,
     });
     directionLight2.castShadow = false
