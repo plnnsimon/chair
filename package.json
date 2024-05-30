@@ -9,7 +9,6 @@
     "serve": "vite preview",
     "deploy": "gh-pages -d dist",
     "copy-realism-effects": "cp -r node_modules/realism-effects/dist assets/vendor/realism-effects"
-  
   },
   "dependencies": {
     "postprocessing": "^6.35.4",
@@ -18,7 +17,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^5.4.0",
-    "dat.gui": "^0.7.9",
     "gh-pages": "^6.1.1",
     "vite": "^5.2.11"
   }
