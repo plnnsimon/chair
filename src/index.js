@@ -31,10 +31,10 @@ fabrics.forEach((fabric) => {
 
 const color = document.getElementById('color')
 color.addEventListener('input', (ev) => {
-  furnitureApplication.setColor(ev.target.value, 'wood')
+  furnitureApplication.setColor(ev.target.value, 'fabric')
 })
 
 // furnitureApplication.initGLTFLoader("/src/js/models/model.glb")
 // furnitureApplication.initGLTFLoader("assets/models/sinteponchair.glb")
-furnitureApplication.initGLTFLoader("assets/models/SinteponС.glb")
+furnitureApplication.initGLTFLoader("assets/models/SinteponС2.glb")
 // furnitureApplication.initGLTFLoader("assets/models/Chair.glb")

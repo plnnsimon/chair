@@ -56,7 +56,7 @@ export default class Renderer {
     this.instance.shadowMapSoft = true;
     // this.instance.toneMapping = THREE.LinearToneMapping
     this.instance.toneMapping = THREE.ACESFilmicToneMapping
-    this.instance.toneMappingExposure = 0.5;
+    this.instance.toneMappingExposure = 1.2;
     this.instance.autoClear = false;
     this.instance.setClearColor(0x000000, 0);
     this.instance.physicallyCorrectLights = true;
@@ -64,13 +64,17 @@ export default class Renderer {
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
     const BACKGROUND_COLOR = '#FFFFFF';
 
-    this.loadEnv('assets/textures/env-map.hdr');
+    // this.loadEnv('assets/textures/env-map.hdr');
 
     this.scene.background = new THREE.Color(BACKGROUND_COLOR);
     this.scene.background.encoding = THREE.SRGBColorSpace;
     this.scene.background.colorSpace = THREE.SRGBColorSpace;
     this.scene.background.minFilter = THREE.LinearFilter;
     this.scene.background.magFilter = THREE.LinearFilter;
+    // const colorObj = { color: '#FFFFFF' }
+    // this.application.gui.addColor(colorObj, 'color').onChange((value) => {
+    //   this.scene.background = new THREE.Color(value)
+    // })
 
     // const sceneSettings = this.application.gui.addFolder('Scene');
     // sceneSettings.add(this.instance, 'toneMappingExposure', 0, 5, 0.01);
