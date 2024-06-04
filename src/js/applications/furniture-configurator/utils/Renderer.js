@@ -50,13 +50,13 @@ export default class Renderer {
       preserveDrawingBuffer: true
     });
     this.instance.shadowMap.enabled = true;
-    this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.instance.shadowMap.type = THREE.CineonToneMapping
     this.instance.shadowMap.needsUpdate = true;
     this.instance.shadowMap.autoUpdate = true;
     this.instance.shadowMapSoft = true;
     // this.instance.toneMapping = THREE.LinearToneMapping
-    this.instance.toneMapping = THREE.CineonToneMapping
-    this.instance.toneMappingExposure = 2.5;
+    this.instance.toneMapping = THREE.ACESFilmicToneMapping
+    this.instance.toneMappingExposure = 3.5;
     this.instance.autoClear = false;
     this.instance.setClearColor(0x000000, 0);
     this.instance.physicallyCorrectLights = true;
