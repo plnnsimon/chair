@@ -1,40 +1,32 @@
-import { FurnitureApplication } from './js/applications/furniture-configurator/index.js'
+import { ConfiguratorApplication } from './js/applications/configurator/index.js'
 import EventEmitter from './pkg/utils/EventEmitter.js'
 
 const emitter = new EventEmitter()
-// const planetsApplication = new PlanetsApplication('/src/js/models/Planet_Final.glb')
-const furnitureApplication = new FurnitureApplication(emitter)
+const configuratorApplication = new ConfiguratorApplication(emitter)
 const canvas = document.getElementById('scene-canvas')
 const container = document.getElementById('scene-container')
-furnitureApplication.build(canvas, container)
-furnitureApplication.mount()
-// this.eventEmitter.subscribe("loadedProgress", (data) => {
-//   this.progress = `${(data * 100).toFixed(0)}%`;
-// });
-// this.eventEmitter.subscribe("setInitFinished", () => {
-//   this.isLoaded = true;
-// });
+configuratorApplication.build(canvas, container)
+configuratorApplication.mount()
+
 const woods = document.querySelectorAll('.wood')
 woods.forEach((wood) => {
   wood.addEventListener('click', (ev) => {
     console.log(ev.target.src, ' IMAGE')
-    furnitureApplication.setTexture(ev.target.src, 'wood')
+    configuratorApplication.setTexture(ev.target.src, 'wood')
   })
 })
+
 const fabrics = document.querySelectorAll('.fabric')
 fabrics.forEach((fabric) => {
   fabric.addEventListener('click', (ev) => {
     console.log(ev.target.src, ' IMAGE')
-    furnitureApplication.setTexture(ev.target.src, 'fabric')
+    configuratorApplication.setTexture(ev.target.src, 'fabric')
   })
 })
 
 const color = document.getElementById('color')
 color.addEventListener('input', (ev) => {
-  furnitureApplication.setColor(ev.target.value, 'fabric')
+  configuratorApplication.setColor(ev.target.value, 'fabric')
 })
 
-// furnitureApplication.initGLTFLoader("/src/js/models/model.glb")
-// furnitureApplication.initGLTFLoader("assets/models/sinteponchair.glb")
-furnitureApplication.initGLTFLoader("assets/models/SinteponС2.glb")
-// furnitureApplication.initGLTFLoader("assets/models/Chair.glb")
+configuratorApplication.initGLTFLoader("assets/models/SinteponС2.glb")
