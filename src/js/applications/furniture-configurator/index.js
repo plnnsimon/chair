@@ -8,10 +8,6 @@ import ModelLoader from '../../../pkg/utils/GLTFLoader.js';
 import ThreejsApplication from '../../../pkg/ThreejsApplication.js';
 import useModelsUtils from "../../../pkg/utils/use-models-utils.js";
 
-// const stats = new Stats()
-// stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
-// document.body.appendChild(stats.dom)
-
 let instance = null;
 const { disposeSceneData, setAnimation } = useModelsUtils();
 
@@ -88,7 +84,6 @@ export class FurnitureApplication extends ThreejsApplication {
     })
 
     // this.setIntersects();
-    // this.setRaycaster();
 
     const geometry = new THREE.PlaneGeometry(10, 10);
    const material = new THREE.ShadowMaterial({
@@ -96,10 +91,6 @@ export class FurnitureApplication extends ThreejsApplication {
       side: THREE.DoubleSide,
       opacity: 0.8
     });
-    // const material = new THREE.MeshStandardMaterial({
-    //   color: 0xfefae7,
-    //   side: THREE.DoubleSide,
-    // });
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = Math.PI / 2;
     plane.position.y = -0;
@@ -107,16 +98,11 @@ export class FurnitureApplication extends ThreejsApplication {
     this.scene.add(plane);
 
     this.scene.traverse((el) => {
-      // if (el.type !== "DirectionalLight" && el.type !== "PointLight") {
-      // }/ el.receiveShadow = true;
-      // el.castShadow = true;
-      // el.receiveShadow = true;
-
       if (el.name.includes('wood')) {
         // this.gui.add(el.material, 'roughness', 0, 1, 0.001)
         // this.gui.add(el.material, 'metalness', 0, 1, 0.001)
-        el.material.roughness = 0.45
-        el.material.metalness = 0.95
+        // el.material.roughness = 0.45
+        // el.material.metalness = 0.95
       }
 
       // if (el.name.includes('fabric')) {

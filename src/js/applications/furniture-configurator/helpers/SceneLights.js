@@ -70,51 +70,7 @@ export default class SceneLights {
     //   position: { x: 0, y: 5, z: 1 },
     //   intensity: 10,
     // });
-    // // // const helper1 = new THREE.DirectionalLightHelper(directionLight, 1);
 
     // this.scene.add(directionLight);
-
-    // const hemiLight = new THREE.HemisphereLight('#fefae7', '#fefae7', 8)
-
-    // const directionLight2 = this.getPointLights({
-    //   position: { x: -0.8, y: 1, z: -0.2 },
-    //   intensity: 1.5,
-    //   color: '#FCFFF1'
-    // });
-    // directionLight2.castShadow = false
-    // this.scene.add(directionLight2);
-
-    // const directionLight3 = this.getPointLights({
-    //   position: { x: 1.8, y: 1, z: -1 },
-    //   intensity: 15,
-    // });
-    // directionLight2.castShadow = true
-    // this.scene.add(directionLight3);
-    // const helper1 = new THREE.PointLightHelper(directionLight2, 0.5);
-    // const helper2 = new THREE.PointLightHelper(directionLight3, 0.5);
-
-    // this.scene.add(hemiLight);
-    // this.scene.add(helper1);
-    // this.scene.add(helper2);
-    // const lightFolder = this.application.gui.addFolder("Light");
-    // lightFolder.add(directionLight, "intensity", 0, 100, 0.01);
-    // lightFolder.add(directionLight.position, "x", -10, 10, 0.001);
-    // lightFolder.add(directionLight.position, "y", -10, 10, 0.001);
-    // lightFolder.add(directionLight.position, "z", -10, 10, 0.001);
-    // // this.scene.add(helper1);
-    // const lightFolder2 = this.application.gui.addFolder("Light 2");
-    // lightFolder2.add(directionLight2, "intensity", 0, 100, 0.01);
-    // lightFolder2.add(directionLight2.position, "x", -10, 10, 0.001);
-    // lightFolder2.add(directionLight2.position, "y", -10, 10, 0.001);
-    // lightFolder2.add(directionLight2.position, "z", -10, 10, 0.001);
-    // const colorObj = { color: '#FFFFFF' }
-    // lightFolder.addColor(colorObj, 'color').onChange((value) => {
-    //   directionLight.color = new THREE.Color(value)
-    // })
-    // const lightFolder3 = this.application.gui.addFolder("Light 3");
-    // lightFolder3.add(directionLight3, "intensity", 0, 100, 0.01);
-    // lightFolder3.add(directionLight3.position, "x", -10, 10, 0.001);
-    // lightFolder3.add(directionLight3.position, "y", -10, 10, 0.001);
-    // lightFolder3.add(directionLight3.position, "z", -10, 10, 0.001);
   }
 }
