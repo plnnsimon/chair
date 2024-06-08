@@ -35,7 +35,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
     this.showRangeMaterialList = false;
     this.sizes = null;
     // this.gui = new dat.GUI();
-    this.gui = null
+    // this.gui = null
     this.sceneLights = new SceneLights(this);
   }
 
@@ -105,12 +105,13 @@ export class ConfiguratorApplication extends ThreejsApplication {
         // el.material.metalness = 0.95
       }
 
-      // if (el.name.includes('fabric')) {
-      //   this.gui.add(el.material, 'roughness', 0, 1, 0.001).name('Fabric R')
-      //   this.gui.add(el.material, 'metalness', 0, 1, 0.001).name('Fabric M')
-      //   // el.material.roughnessMap = null
-      //   // el.material.metalnessMap = null
-      // }
+      if (el.name.includes('fabric')) {
+        // this.gui.add(el.material, 'emissiveIntensity', 0, 10, 0.001).name('Fabric R')
+        // this.gui.add(el.material, 'metalness', 0, 1, 0.001).name('Fabric M')
+        // el.material.roughnessMap = null
+        // el.material.metalnessMap = null
+        el.material.emissiveIntensity = 10
+      }
     });
 
     this.eventEmitter.notify("setInitFinished");
@@ -155,7 +156,19 @@ export class ConfiguratorApplication extends ThreejsApplication {
   setColor(color, name) {
     this.scene.traverse((el) => {
       if (el.name.toLowerCase().includes(name)) {
-        el.material.color = new THREE.Color(color)
+        // el.material.color = new THREE.Color(color)
+        el.material.emissive = new THREE.Color(color)
+        el.material.needsUpdate = true
+      }
+    })
+  }
+
+  setIntensity(value, name) {
+    this.scene.traverse((el) => {
+      if (el.name.toLowerCase().includes(name)) {
+        // el.material.color = new THREE.Color(color)
+        el.material.emissiveIntensity = value
+        el.material.needsUpdate = true
       }
     })
   }

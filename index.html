@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>test</title>
     <style>
-      /* model-viewer {
-          width: 100%;
-          height: 600px;
-          border: 1px solid #ccc;
-          background-color: #f0f0f0;
-      } */
-
       html {
         height: 100%;
         width: 100%;
@@ -20,14 +13,9 @@
       body {
         background-color: black;
         padding: 0 40px;
-        /* overflow: hidden; */
-        /* width: 100%; */
-        /* height: 100vh; */
         height: 100%;
         display: grid;
-        /* overflow: hidden; */
         margin: 0;
-        /* padding: 0; */
       }
 
       .container {
@@ -38,50 +26,15 @@
       }
 
       .scene {
-        /* position: absolute;
-            width: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); */
-        /* border: 1px solid red; */
         width: 100%;
         height: 100%;
       }
-
-      /* .scene::before {
-            content: '';
-            display: inline-block;
-            padding-top: 100%;
-        }
-        #scene-container {
-        #scene-container {
-            position: absolute;
-            width: 350%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid blue;
-        }
-        #scene-container::before {
-            content: '';
-            display: inline-block;
-            padding-top: 50%;
-        } */
       canvas {
-        /* position: absolute;
-            top: 0;
-            left: 0; */
         width: 100% !important;
         height: 100% !important;
       }
 
       img {
-        /* position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.5; */
         width: 60px;
         height: 60px;
         object-fit: contain;
@@ -95,17 +48,23 @@
         display: flex;
         grid-gap: 10px;
         left: 0;
-        top: 0;
+        top: 30px;
         padding: 20px;
       }
 
+      .intencity {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        left: 0;
+        top: 0px;
+        padding: 0 20px;
+      }
+
       .colors_fabric {
-        top: 80px;
+        top: 100px;
       }
     </style>
-
-<!-- <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-<script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script> -->
   </head>
 
   <body>
@@ -114,12 +73,16 @@
         <canvas id="scene-canvas"></canvas>
       </div>
 
+      <div class="intencity">
+        <label for="range">Emissive intensity</label>
+        <input placeholder="Range" id="range" type="range" min="0" max="20" />
+      </div>
+
       <div class="colors">
         <img src="assets/textures/wood.jpg" alt="wood" class="wood" />
         <img src="assets/textures/wood-2.jpg" alt="wood" class="wood" />
         <img src="assets/textures/wood-3.jpg" alt="wood" class="wood" />
         <input id="color" type="color" />
-        <!-- <img src="" alt="pillar"> -->
       </div>
 
       <div class="colors colors_fabric">
@@ -130,22 +93,6 @@
         <!-- <img src="" alt="pillar"> -->
       </div>
     </div>
-
-    <!-- <model-viewer
-      tone-mapping="neutral"
-      shadow-intensity="1"
-      camera-controls
-      src="assets/models/Chair.glb"
-    >
-    </model-viewer>
-
-    <model-viewer
-      tone-mapping="neutral"
-      shadow-intensity="1"
-      camera-controls
-      src="assets/models/sinteponchair.glb"
-    >
-    </model-viewer> -->
   </body>
 
   <script
@@ -166,13 +113,10 @@
       "imports": {
         "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.js",
         "loaders": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/examples/jsm/loaders/",
-        "postprocessing": "https://cdn.jsdelivr.net/npm/postprocessing@6.35.4/+esm",
-        "realism-effects": "/chair/vendor/realism-effects/index.js",
         "dat.gui": "https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"
       }
     }
   </script>
-  <!-- , -->
 
   <script type="module" src="src/index.js"></script>
 </html>

@@ -66,11 +66,14 @@ export default class SceneLights {
   }
 
   initializeLights() {
+    const ambient = new THREE.AmbientLight('#ffffff', 5)
     // const directionLight = this.getDirectionalLights({
     //   position: { x: 0, y: 5, z: 1 },
     //   intensity: 10,
     // });
 
     // this.scene.add(directionLight);
+    // this.application.gui.add(ambient, 'intensity', 0, 10, 0.001).name('light')
+    // this.scene.add(ambient);
   }
 }

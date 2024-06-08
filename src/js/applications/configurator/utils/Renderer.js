@@ -33,6 +33,7 @@ export default class Renderer {
     this.instance.shadowMap.autoUpdate = true;
     this.instance.shadowMapSoft = true;
     this.instance.toneMapping = THREE.ACESFilmicToneMapping
+    // this.instance.toneMappingExposure = 3.5;
     this.instance.toneMappingExposure = 3.5;
     this.instance.autoClear = false;
     this.instance.setClearColor(0x000000, 0);
