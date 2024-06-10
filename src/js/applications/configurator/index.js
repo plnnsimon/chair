@@ -110,7 +110,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
         // this.gui.add(el.material, 'metalness', 0, 1, 0.001).name('Fabric M')
         // el.material.roughnessMap = null
         // el.material.metalnessMap = null
-        el.material.emissiveIntensity = 10
+        el.material.emissiveIntensity = 1
       }
     });
 
