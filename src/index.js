@@ -5,6 +5,7 @@ const emitter = new EventEmitter();
 const configuratorApplication = new ConfiguratorApplication(emitter);
 const canvas = document.getElementById('scene-canvas');
 const color = document.getElementById('color');
+const colorWood = document.getElementById('colorWood');
 const container = document.getElementById('scene-container');
 configuratorApplication.build(canvas, container);
 configuratorApplication.mount();
@@ -30,6 +31,10 @@ configuratorApplication.mount();
 // })
   color.addEventListener('input', (ev) => {
     configuratorApplication.setColor(ev.target.value, 'fabric');
+  });
+
+  colorWood.addEventListener('input', (ev) => {
+    configuratorApplication.setColor(ev.target.value, 'wood');
   });
 
 configuratorApplication.initGLTFLoader('assets/models/SinteponС2.glb');
