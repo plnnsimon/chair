@@ -47,9 +47,19 @@
         position: absolute;
         display: flex;
         grid-gap: 10px;
+        max-width: 200px;
+        flex-wrap: wrap;
         left: 0;
-        top: 30px;
+        top: 0;
         padding: 20px;
+      }
+
+      .color-item {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        border: 1px solid rgb(0, 0, 0);
+        cursor: pointer;
       }
 
       .intencity {
@@ -61,8 +71,10 @@
         padding: 0 20px;
       }
 
-      .colors_fabric {
-        top: 100px;
+      #color {
+        position: absolute;
+    top: 120px;
+    left: 20px;
       }
     </style>
   </head>
@@ -73,25 +85,29 @@
         <canvas id="scene-canvas"></canvas>
       </div>
 
-      <div class="intencity">
+      <!-- <div class="intencity">
         <label for="range">Emissive intensity</label>
         <input placeholder="Range" id="range" type="range" min="0" max="20" />
-      </div>
+      </div> -->
 
-      <div class="colors">
+      <!-- <div class="colors">
         <img src="assets/textures/wood.jpg" alt="wood" class="wood" />
         <img src="assets/textures/wood-2.jpg" alt="wood" class="wood" />
         <img src="assets/textures/wood-3.jpg" alt="wood" class="wood" />
         <input id="color" type="color" />
+      </div> -->
+
+      <div id="colors" class="colors colors_fabric">
+
       </div>
 
-      <div class="colors colors_fabric">
+      <input id="color" type="color" />
+      <!-- <div class="colors colors_fabric">
         <img src="assets/textures/fabric-2.jpg" alt="wood" class="fabric" />
         <img src="assets/textures/fabric-3.jpg" alt="wood" class="fabric" />
         <img src="assets/textures/fabric-4.jpg" alt="wood" class="fabric" />
         <img src="assets/textures/fabric.jpg" alt="wood" class="fabric" />
-        <!-- <img src="" alt="pillar"> -->
-      </div>
+      </div> -->
     </div>
   </body>
 
