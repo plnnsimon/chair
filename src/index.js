@@ -4,7 +4,7 @@ import EventEmitter from './pkg/utils/EventEmitter.js';
 const emitter = new EventEmitter();
 const configuratorApplication = new ConfiguratorApplication(emitter);
 const canvas = document.getElementById('scene-canvas');
-const range = document.getElementById('range');
+const color = document.getElementById('color');
 const container = document.getElementById('scene-container');
 configuratorApplication.build(canvas, container);
 configuratorApplication.mount();
@@ -28,6 +28,9 @@ configuratorApplication.mount();
 // range.addEventListener('input', (ev) => {
 //   configuratorApplication.setIntensity(ev.target.value, 'fabric')
 // })
+  color.addEventListener('input', (ev) => {
+    configuratorApplication.setColor(ev.target.value, 'fabric');
+  });
 
 configuratorApplication.initGLTFLoader('assets/models/SinteponС2.glb');
 
