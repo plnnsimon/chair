@@ -9,20 +9,14 @@ import {
   EffectComposer,
   RenderPass,
   EffectPass,
-  ToneMappingEffect,
-  ToneMappingMode,
-  FXAAEffect,
   SelectiveBloomEffect,
-  BlurPass,
-  BlendFunction,
-  KernelSize
+  BlendFunction
 } from 'postprocessing';
-// import {
-//   VelocityDepthNormalPass,
-//   HBAOEffect,
-//   // TRAAEffect,
-//   SSAOEffect
-// } from 'realism-effects';
+// import { EffectComposer } from 'https://unpkg.com/postprocessing@6.35.4/build/postprocessing.esm.js';
+// import { RenderPass } from 'https://unpkg.com/postprocessing@6.35.4/build/postprocessing.esm.js';
+// import { EffectPass } from 'https://unpkg.com/postprocessing@6.35.4/build/postprocessing.esm.js';
+// import { SelectiveBloomEffect } from 'https://unpkg.com/postprocessing@6.35.4/build/postprocessing.esm.js';
+// import { BlendFunction } from 'https://unpkg.com/postprocessing@6.35.4/build/postprocessing.esm.js';
 
 export default class Renderer {
   constructor(application) {
