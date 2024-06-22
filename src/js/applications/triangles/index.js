@@ -99,7 +99,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
     const rloader = new RGBELoader();
 
     const hdrEquirect = await rloader.loadAsync(
-      'assets/textures/empty_warehouse_01_2k.hdr'
+      'assets/textures/env-map.hdr'
     );
     hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
 
