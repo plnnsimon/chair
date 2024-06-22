@@ -62,7 +62,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
     setAnimation(this);
 
     if (this.scene) {
-      this.scene.rotation.y += 0.005
+      this.scene.rotation.y += 0.005;
     }
 
     if (this.mashes?.length) {
@@ -93,16 +93,15 @@ export class ConfiguratorApplication extends ThreejsApplication {
     this.loadedModel = await loader.initGLTFLoader(url);
     this.loadedModel.scene.scale.set(0.15, 0.15, 0.15);
     this.loadedModel.scene.position.set(0, 0.3, 0);
-    this.scene.add(this.loadedModel.scene);
-    console.log(this.loadedModel, ' this.loadedModel');
-    let elem;
+
+    // let elem;
     this.mashes = [];
-    const hdrEquirect = new RGBELoader().load(
-      'assets/textures/empty_warehouse_01_2k.hdr',
-      () => {
-        hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
-      }
+    const rloader = new RGBELoader();
+
+    const hdrEquirect = await rloader.loadAsync(
+      'assets/textures/empty_warehouse_01_2k.hdr'
     );
+    hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
 
     const reflectMaterial = new THREE.MeshPhysicalMaterial({
       // ior: 2.35,
@@ -134,7 +133,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
         el.castShadow = false;
         el.receiveShadow = false;
         el.needsUpdate = true;
-        elem = el;
+        // elem = el;
         this.mashes.push(el);
       }
     });
@@ -168,5 +167,6 @@ export class ConfiguratorApplication extends ThreejsApplication {
     this.scene.add(plane);
 
     this.eventEmitter.notify('setInitFinished');
+    this.scene.add(this.loadedModel.scene);
   }
 }
