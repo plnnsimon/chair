@@ -27,8 +27,8 @@ export default class Renderer {
       alpha: false,
       preserveDrawingBuffer: true
     });
-    this.instance.shadowMap.enabled = true;
-    this.instance.shadowMap.type = THREE.CineonToneMapping
+    // this.instance.shadowMap.enabled = true;
+    // this.instance.shadowMap.type = THREE.PCFSoftShadowMap
     this.instance.shadowMap.needsUpdate = true;
     this.instance.shadowMap.autoUpdate = true;
     this.instance.shadowMapSoft = true;
