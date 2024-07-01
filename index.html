@@ -87,14 +87,37 @@
         top: 120px;
         left: 20px;
       }
+
+      #captureButton {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        padding: 10px;
+        background: #000000;
+        color: white;
+      }
+
+      #cameraInfo {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        padding: 20px;
+        font-size: 16px;
+        background: #000000;
+        color: white;
+        display: grid;
+        grid-gap: 10px;
+      }
     </style>
   </head>
 
   <body>
     <div class="container">
+      <div id="cameraInfo"></div>
       <div id="scene-container" class="scene">
         <canvas id="scene-canvas"></canvas>
       </div>
+      <button id="captureButton">Capture Image</button>
 
       <!-- <div class="intencity">
         <label for="range">Emissive intensity</label>
@@ -108,7 +131,7 @@
         <input id="color" type="color" />
       </div> -->
 
-      <div id="colors" class="colors colors_fabric"></div>
+      <!-- <div id="colors" class="colors colors_fabric"></div>
 
       <div id="woods" class="woods"></div>
 
@@ -120,7 +143,7 @@
         <label for="colorWood">Wood</label>
 
         <input id="colorWood" type="color" />
-      </div>
+      </div> -->
       <!-- <div class="colors colors_fabric">
         <img src="assets/textures/fabric-2.jpg" alt="wood" class="fabric" />
         <img src="assets/textures/fabric-3.jpg" alt="wood" class="fabric" />

@@ -6,7 +6,7 @@ import SceneLights from './helpers/SceneLights.js';
 import Sizes from './utils/Sizes.js';
 import ModelLoader from '../../../pkg/utils/GLTFLoader.js';
 import ThreejsApplication from '../../../pkg/ThreejsApplication.js';
-import { RGBELoader } from 'https://threejs.org/examples/jsm/loaders/RGBELoader.js';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import useModelsUtils from '../../../pkg/utils/use-models-utils.js';
 
 let instance = null;
@@ -70,10 +70,8 @@ export class ConfiguratorApplication extends ThreejsApplication {
       const axis = new THREE.Vector3(0, 0, 1);
       const angle = THREE.MathUtils.degToRad(0.4);
       quaternion.setFromAxisAngle(axis, angle);
+
       this.mashes.forEach((el) => {
-        // el.rotation.y -= 0.01;
-        // el.rotation.x += 0.01;
-        // el.rotation.z += 0.01;
         el.quaternion.multiplyQuaternions(quaternion, el.quaternion);
       });
     }
@@ -98,33 +96,23 @@ export class ConfiguratorApplication extends ThreejsApplication {
     this.mashes = [];
     const rloader = new RGBELoader();
 
-    const hdrEquirect = await rloader.loadAsync(
-      'assets/textures/env-map.hdr'
-    );
+    const hdrEquirect = await rloader.loadAsync('assets/textures/env-map.hdr');
     hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
 
     const reflectMaterial = new THREE.MeshPhysicalMaterial({
-      // ior: 2.35,
-      color: '#0095ff',
+      color: '#00497c',
       emissiveIntensity: 5,
       clearcoat: 1.5,
       reflectivity: 1.5,
-      // opacity: 0.9,
       transparent: true,
       envMap: hdrEquirect,
       transmission: 1,
       thickness: 1.5,
       roughness: 0.15,
-      // metallness: 0,
       envMapIntensity: 0.05,
       side: THREE.DoubleSide,
       blending: THREE.NormalBlending
     });
-
-    // const icoSphere = new THREE.IcosahedronGeometry(0.2, 10);
-    // const mesh = new THREE.Mesh(icoSphere, reflectMaterial);
-    // mesh.position.y = 0.4;
-    // this.scene.add(mesh);
 
     this.loadedModel.scene.traverse((el) => {
       if (el.isMesh) {
@@ -133,26 +121,9 @@ export class ConfiguratorApplication extends ThreejsApplication {
         el.castShadow = false;
         el.receiveShadow = false;
         el.needsUpdate = true;
-        // elem = el;
         this.mashes.push(el);
       }
     });
-
-    // this.gui.add(elem.material, 'metalness', 0, 5, 0.001);
-    // this.gui.add(elem.material, 'roughness', 0, 5, 0.001);
-    // // this.gui.add(elem.material, 'transparency', 0, 5, 0.001)
-    // this.gui.add(elem.material, 'opacity', 0, 5, 0.001);
-    // this.gui.add(elem.material, 'transmission', 0, 5, 0.001);
-    // this.gui.add(elem.material, 'reflectivity', 0, 5, 0.001);
-    // this.gui.add(elem.material, 'thickness', 0, 5, 0.001);
-    // this.gui.add(elem.material, 'ior', -5, 5, 0.001);
-    // this.gui.add(elem.material, 'clearcoat', -5, 5, 0.001);
-    // this.gui.add(elem.material, 'clearcoatRoughness', -5, 5, 0.001);
-    // this.gui.add(elem.material, 'envMapIntensity', -5, 5, 0.001);
-
-    // console.log(this.scene);
-
-    // this.setIntersects();
 
     const geometry = new THREE.PlaneGeometry(10, 10);
     const material = new THREE.ShadowMaterial({

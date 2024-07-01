@@ -1,12 +1,12 @@
-import * as THREE from "three";
-import Camera from "./utils/Camera.js";
-import Renderer from "./utils/Renderer.js";
-import SceneLights from "./helpers/SceneLights.js";
+import * as THREE from 'three';
+import Camera from './utils/Camera.js';
+import Renderer from './utils/Renderer.js';
+import SceneLights from './helpers/SceneLights.js';
 // import * as dat from "dat.gui";
 import Sizes from './utils/Sizes.js';
 import ModelLoader from '../../../pkg/utils/GLTFLoader.js';
 import ThreejsApplication from '../../../pkg/ThreejsApplication.js';
-import useModelsUtils from "../../../pkg/utils/use-models-utils.js";
+import useModelsUtils from '../../../pkg/utils/use-models-utils.js';
 
 let instance = null;
 const { disposeSceneData, setAnimation } = useModelsUtils();
@@ -37,6 +37,10 @@ export class ConfiguratorApplication extends ThreejsApplication {
     // this.gui = new dat.GUI();
     // this.gui = null
     this.sceneLights = new SceneLights(this);
+
+    this.fps = 30;
+    this.interval = 1000 / this.fps;
+    this.then = Date.now();
   }
 
   async build(canvas, canvasDomElement) {
@@ -45,13 +49,20 @@ export class ConfiguratorApplication extends ThreejsApplication {
     this.sizes = new Sizes(canvasDomElement);
 
     this.camera = new Camera(this);
-    this.renderer = new Renderer(this);
+    this.renderer = new Renderer(this, true);
 
     // resize event
     this.resize();
-    this.sizes.subscribe("resize", () => {
+    this.sizes.subscribe('resize', () => {
       this.resize();
     });
+
+    this.cameraInfo = document.getElementById('cameraInfo');
+
+    setInterval(() => {
+      console.log(this.renderer);
+      console.log(this.sizes);
+    }, 5000);
   }
 
   /**
@@ -59,18 +70,39 @@ export class ConfiguratorApplication extends ThreejsApplication {
    */
   animateFrame() {
     setAnimation(this);
+
+    this.updateCameraInfoHtml();
+  }
+
+  updateCameraInfoHtml() {
+    if (!this.cameraInfo || !this.camera) {
+      return;
+    }
+    const cameraPos = this.camera.instance.position;
+
+    this.cameraInfo.innerHTML = `
+      <span>X: ${cameraPos.x.toFixed(2)}</span>
+      <span>Y: ${cameraPos.y.toFixed(2)}</span>
+      <span>Z: ${cameraPos.z.toFixed(2)}</span>
+    `;
   }
 
   resize() {
     this.camera.resize();
-    this.renderer.resize();
+
+    const now = Date.now();
+    const elapsed = now - this.then;
+
+    if (elapsed > this.interval) {
+      this.renderer.resize();
+    }
   }
 
   /**
    * LOAD MODEL
    */
   async initGLTFLoader(url) {
-    const loader = new ModelLoader("", this);
+    const loader = new ModelLoader('', this);
 
     this.loadedModel = await loader.initGLTFLoader(url);
     this.scene.add(this.loadedModel.scene);
@@ -81,12 +113,12 @@ export class ConfiguratorApplication extends ThreejsApplication {
         el.castShadow = true;
         el.receiveShadow = true;
       }
-    })
+    });
 
     // this.setIntersects();
 
     const geometry = new THREE.PlaneGeometry(10, 10);
-   const material = new THREE.ShadowMaterial({
+    const material = new THREE.ShadowMaterial({
       color: 0xffffff,
       side: THREE.DoubleSide,
       opacity: 0.8
@@ -94,7 +126,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = Math.PI / 2;
     plane.position.y = -0;
-    plane.receiveShadow = true
+    plane.receiveShadow = true;
     this.scene.add(plane);
 
     this.scene.traverse((el) => {
@@ -110,11 +142,11 @@ export class ConfiguratorApplication extends ThreejsApplication {
         // this.gui.add(el.material, 'metalness', 0, 1, 0.001).name('Fabric M')
         // el.material.roughnessMap = null
         // el.material.metalnessMap = null
-        el.material.emissiveIntensity = 1
+        el.material.emissiveIntensity = 1;
       }
     });
 
-    this.eventEmitter.notify("setInitFinished");
+    this.eventEmitter.notify('setInitFinished');
   }
 
   setTexture(texturePath, name) {
@@ -136,7 +168,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
     if (!mapTexture) {
       return;
     }
-    
+
     this.scene.traverse((el) => {
       if (el.name.toLowerCase().includes(name)) {
         // if (name === 'wood') {
@@ -144,32 +176,32 @@ export class ConfiguratorApplication extends ThreejsApplication {
         //   el.material.metalness = 1
         // }
         if (name === 'fabric') {
-          el.material.roughness = 1
-          el.material.metalness = 0.9
+          el.material.roughness = 1;
+          el.material.metalness = 0.9;
         }
         el.material.map = mapTexture;
         el.material.needsUpdate = true;
       }
-    })
+    });
   }
 
   setColor(color, name) {
     this.scene.traverse((el) => {
       if (el.name.toLowerCase().includes(name)) {
         // el.material.color = new THREE.Color(color)
-        el.material.emissive = new THREE.Color(color)
-        el.material.needsUpdate = true
+        el.material.emissive = new THREE.Color(color);
+        el.material.needsUpdate = true;
       }
-    })
+    });
   }
 
   setIntensity(value, name) {
     this.scene.traverse((el) => {
       if (el.name.toLowerCase().includes(name)) {
         // el.material.color = new THREE.Color(color)
-        el.material.emissiveIntensity = value
-        el.material.needsUpdate = true
+        el.material.emissiveIntensity = value;
+        el.material.needsUpdate = true;
       }
-    })
+    });
   }
 }
