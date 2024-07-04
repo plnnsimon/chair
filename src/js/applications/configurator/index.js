@@ -58,11 +58,6 @@ export class ConfiguratorApplication extends ThreejsApplication {
     });
 
     this.cameraInfo = document.getElementById('cameraInfo');
-
-    setInterval(() => {
-      console.log(this.renderer);
-      console.log(this.sizes);
-    }, 5000);
   }
 
   /**
@@ -147,6 +142,10 @@ export class ConfiguratorApplication extends ThreejsApplication {
     });
 
     this.eventEmitter.notify('setInitFinished');
+
+    setTimeout(() => {
+      this.resize();
+    }, 200);
   }
 
   setTexture(texturePath, name) {
