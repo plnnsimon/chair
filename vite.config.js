@@ -3,17 +3,14 @@ import legacy from '@vitejs/plugin-legacy';
 import path from 'path';
 
 export default defineConfig({
-  // base: '/',
-  base: '/chair/',
-
-  // envDir,
+  base: './',
 
   server: {
-    // host: '0.0.0.0',
-    // port: 3002,
-    // fs: {
-    //   strict: false
-    // }
+    host: 'woodsun.84.designplanet.ua',
+    port: 80,
+    fs: {
+      strict: false
+    }
   },
 
   build: {

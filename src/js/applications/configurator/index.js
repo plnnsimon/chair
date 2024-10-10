@@ -112,17 +112,17 @@ export class ConfiguratorApplication extends ThreejsApplication {
 
     // this.setIntersects();
 
-    const geometry = new THREE.PlaneGeometry(10, 10);
-    const material = new THREE.ShadowMaterial({
-      color: 0xffffff,
-      side: THREE.DoubleSide,
-      opacity: 0.8
-    });
-    const plane = new THREE.Mesh(geometry, material);
-    plane.rotation.x = Math.PI / 2;
-    plane.position.y = -0;
-    plane.receiveShadow = true;
-    this.scene.add(plane);
+    // const geometry = new THREE.PlaneGeometry(10, 10);
+    // const material = new THREE.ShadowMaterial({
+    //   color: 0xffffff,
+    //   side: THREE.DoubleSide,
+    //   opacity: 0.8
+    // });
+    // const plane = new THREE.Mesh(geometry, material);
+    // plane.rotation.x = Math.PI / 2;
+    // plane.position.y = -0.1;
+    // plane.receiveShadow = true;
+    // this.scene.add(plane);
 
     this.scene.traverse((el) => {
       if (el.name.includes('wood')) {

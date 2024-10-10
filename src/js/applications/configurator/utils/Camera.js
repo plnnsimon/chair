@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js'
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export default class Camera {
   constructor(application) {
@@ -15,8 +15,8 @@ export default class Camera {
       position: {
         x: -1.5,
         z: -1,
-        y: 1,
-      },
+        y: 1
+      }
     };
 
     this.setInstance();
@@ -24,14 +24,9 @@ export default class Camera {
   }
 
   setInstance() {
-    this.instance = new THREE.PerspectiveCamera(
-      45,
-      this.sizes.aspect,
-      0.1,
-      15
-    );
+    this.instance = new THREE.PerspectiveCamera(45, this.sizes.aspect, 0.1, 15);
 
-    this.instance.position.set(-0.7, 0.8, 1.5)
+    this.instance.position.set(-2.31, 0.93, 1.86);
   }
 
   setOrbitControls() {

@@ -6,7 +6,7 @@ import SceneLights from './helpers/SceneLights.js';
 import Sizes from './utils/Sizes.js';
 import ModelLoader from '../../../pkg/utils/GLTFLoader.js';
 import ThreejsApplication from '../../../pkg/ThreejsApplication.js';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
+import { RGBELoader } from 'https://threejs.org/examples/jsm/loaders/RGBELoader.js';
 import useModelsUtils from '../../../pkg/utils/use-models-utils.js';
 
 let instance = null;
@@ -35,6 +35,7 @@ export class ConfiguratorApplication extends ThreejsApplication {
     this.canIntersect = true;
     this.showRangeMaterialList = false;
     this.sizes = null;
+    this.time = Date.now();
     // this.gui = new dat.GUI();
     // this.gui = null
     this.sceneLights = new SceneLights(this);
@@ -59,27 +60,43 @@ export class ConfiguratorApplication extends ThreejsApplication {
    * INITIALIZATION
    */
   animateFrame() {
+    const currentTime = Date.now();
+    const deltaTime = currentTime - this.time;
+    this.time = currentTime;
+
     setAnimation(this);
 
-    if (this.scene) {
-      this.scene.rotation.y += 0.005;
-    }
+    // if (this.scene) {
+    //   this.scene.rotation.y += 0.005;
+    // }
 
-    if (this.mashes?.length) {
-      const quaternion = new THREE.Quaternion();
-      const axis = new THREE.Vector3(0, 0, 1);
-      const angle = THREE.MathUtils.degToRad(0.4);
-      quaternion.setFromAxisAngle(axis, angle);
+    // if (this.mashes?.length) {
+    //   const quaternion = new THREE.Quaternion();
+    //   const axis = new THREE.Vector3(0, 0, 1);
+    //   const angle = THREE.MathUtils.degToRad(0.4);
+    //   quaternion.setFromAxisAngle(axis, angle);
 
-      this.mashes.forEach((el) => {
-        el.quaternion.multiplyQuaternions(quaternion, el.quaternion);
-      });
+    //   this.mashes.forEach((el) => {
+    //     el.quaternion.multiplyQuaternions(quaternion, el.quaternion);
+    //   });
+    // }
+
+    if (this.mixer) {
+      this.mixer.update(deltaTime);
     }
   }
 
   resize() {
     this.camera.resize();
     this.renderer.resize();
+  }
+
+  setPixelRatio(ratio) {
+    if (!this.renderer.instance) {
+      return;
+    }
+
+    this.renderer.instance.setPixelRatio(ratio);
   }
 
   /**
@@ -139,5 +156,14 @@ export class ConfiguratorApplication extends ThreejsApplication {
 
     this.eventEmitter.notify('setInitFinished');
     this.scene.add(this.loadedModel.scene);
+
+    const clips = this.loadedModel.animations;
+    this.mixer = new THREE.AnimationMixer(this.loadedModel.scene);
+
+    clips.forEach((clip) => {
+      this.mixer.clipAction(clip).setLoop(THREE.LoopRepeat);
+      this.mixer.clipAction(clip).timeScale = 0.0005;
+      this.mixer.clipAction(clip).play();
+    });
   }
 }

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+import { RGBELoader } from 'https://threejs.org/examples/jsm/loaders/RGBELoader.js';
 import { HalfFloatType, Clock } from 'three';
 import {
   EffectComposer,
@@ -53,7 +53,8 @@ export default class Renderer {
     renderPass.clearAlpha = 0;
 
     this.composer = new EffectComposer(this.instance, {
-      multisampling: Math.min(2, this.instance.capabilities.maxSamples),
+      // multisampling: Math.min(2, this.instance.capabilities.maxSamples),
+      multisampling: 2,
       frameBufferType: HalfFloatType,
       alpha: true
     });
@@ -66,10 +67,10 @@ export default class Renderer {
         blendFunction: BlendFunction.ADD,
         mipmapBlur: true,
         filter: true,
-        luminanceThreshold: 0.0,
-        luminanceSmoothing: 0.0,
-        intensity: 1.5,
-        radius: 0.3
+        luminanceThreshold: 0.5,
+        luminanceSmoothing: 1.0,
+        intensity: 1.0,
+        radius: 0.1
       }
     );
 
